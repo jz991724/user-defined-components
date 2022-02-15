@@ -1,10 +1,15 @@
 import Vue from 'vue';
+import Antd from 'ant-design-vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import 'ant-design-vue/dist/antd.css';
+import UserDefinedComponents from '../packages';
 
 Vue.config.productionTip = false;
+Vue.use(Antd);
 
+Vue.use(UserDefinedComponents);
 new Vue({
   router,
   store,
