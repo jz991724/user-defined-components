@@ -1,11 +1,24 @@
 {
-  "name": "user-defined-components",
+  "name": "zhangjun-defined-components",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "自定义组件库",
+  "author": "张俊",
+  "keywords": [
+    "UserDefinedComponentsUI",
+    "userDefinedComponentsui",
+    "Vue组件"
+  ],
+  "main": "lib/zjui.common.js",
+  "files": [
+    "lib",
+    "packages"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name zjui --dest lib packages/index.js"
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
