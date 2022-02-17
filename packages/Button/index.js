@@ -2,8 +2,8 @@
 import myButton from './MyButton.vue';
 
 // 为组件提供 install 安装方法，供按需引入
-myButton.install = (vue) => {
-  vue.components(myButton.name, myButton);
+myButton.install = (Vue) => {
+  Vue.component(myButton.name, myButton);
 };
 
 // 导出组件

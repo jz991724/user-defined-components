@@ -1,5 +1,5 @@
 // 导入组件
-import myButton from './Button/MyButton.vue';
+import myButton from './Button';
 
 // 组件列表
 const components = [myButton];
