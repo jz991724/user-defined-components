@@ -1,8 +1,10 @@
 // 导入组件
-import myButton from './Button';
+import MultipleChoiceBox from './Select/MultipleChoiceBox';
+import RangePicker from './Select/RangePicker';
+import TabsModal from './Tabs/TabsModal';
 
 // 组件列表
-const components = [myButton];
+const components = [MultipleChoiceBox, RangePicker, TabsModal];
 
 // 定义 install 方法，接收 Vue 作为参数。如果使用 use 注册插件，那么所有的组件都会被注册
 const install = (Vue) => {
@@ -22,7 +24,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 const UserDefinedComponents = {
   install, // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
-  myButton,
+  MultipleChoiceBox,
+  RangePicker,
+  TabsModal,
 };
 
 export default UserDefinedComponents;
