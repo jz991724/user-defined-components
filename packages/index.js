@@ -22,7 +22,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 const UserDefinedComponents = {
   install, // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
-  ...components,
+  myButton,
 };
 
 export default UserDefinedComponents;

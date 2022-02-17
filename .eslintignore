@@ -1,0 +1,7 @@
+build/*.js
+src/lib/3rd/*
+src/assets
+src/vendors
+public
+dist
+node_modules
