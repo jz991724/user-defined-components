@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-card>
+    <borderless-card>
       <div class="flex response justify-between">
         <range-picker style="width:400px;" v-model="dates"></range-picker>
 
@@ -10,23 +10,28 @@
                              :required="true"
                              :tree-data="treeData"></multiple-choice-box>
       </div>
-    </a-card>
+    </borderless-card>
 
     <!--tabs-->
-    <a-card>
+    <borderless-card>
       <!--      <a-locale-provider :locale="locale">-->
       <!--        <router-view :key="$route.fullPath"></router-view>-->
       <!--      </a-locale-provider>-->
+      <a-button type="primary" @click="onShowTabsModal()">展示tabsModal</a-button>
+      <tabs-modal ref="tabsModal"></tabs-modal>
+    </borderless-card>
 
-      <tabs-modal-preview></tabs-modal-preview>
-    </a-card>
+    <borderless-card-example></borderless-card-example>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import BorderlessCardExample from './Card/BorderlessCard_Example.vue';
 
-@Component({})
+@Component({
+  components: { BorderlessCardExample },
+})
 export default class Home extends Vue {
   value = ['黎明-01', '黎明-02'];
 
@@ -95,5 +100,12 @@ export default class Home extends Vue {
   ];
 
   dates = ['2021-01-03T08:51:22.384Z', '2021-02-25T08:51:22.384Z'];
+
+  onShowTabsModal() {
+    const { tabsModal }: any = this.$refs;
+    if (tabsModal) {
+      tabsModal.show();
+    }
+  }
 }
 </script>

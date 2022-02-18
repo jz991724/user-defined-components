@@ -9,6 +9,7 @@ import UserDefinedComponents from '../packages';
 Vue.config.productionTip = false;
 Vue.use(Antd);
 
+// 全局注册
 Vue.use(UserDefinedComponents);
 new Vue({
   router,
