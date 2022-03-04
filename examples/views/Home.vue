@@ -21,16 +21,20 @@
       <tabs-modal ref="tabsModal"></tabs-modal>
     </borderless-card>
 
-    <borderless-card-example></borderless-card-example>
+    <CarouselTableExample style="margin:auto;"></CarouselTableExample>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import BorderlessCardExample from './Card/BorderlessCard_Example.vue';
+import CarouselTableExample from './DataDisplay/CarouselTable_Example.vue';
 
 @Component({
-  components: { BorderlessCardExample },
+  components: {
+    CarouselTableExample,
+    BorderlessCardExample,
+  },
 })
 export default class Home extends Vue {
   value = ['黎明-01', '黎明-02'];
