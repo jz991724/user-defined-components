@@ -7,17 +7,24 @@
   <div>
     <div class="flex tableHead">
       <template v-for="{key,title,width} in columns">
-        <div :style="{width:width||getAverageColumnWidth}" :key="key">{{ title }}</div>
+        <div :style="{width:width||getAverageColumnWidth}"
+             :key="key"
+             :class="{'bordered':bordered}">
+          {{
+            title
+          }}
+        </div>
       </template>
     </div>
     <a-carousel dot-position="right"
                 :dots="false"
                 class="tableContent"
-                :autoplay="true">
+                v-bind="$attrs">
       <template v-for="record,index in dataSource">
         <div class="row" :key="index">
           <template v-for="column in columns">
-            <div :style="{width:column.width||getAverageColumnWidth}"
+            <div :style="{width:column.width||getAverageColumnWidth,wordBreak:'break-all'}"
+                 :class="{'text-cut':column.ellipsis,'bordered':bordered}"
                  :key="column.key">
               <slot v-if="column.scopedSlots&&column.scopedSlots.customRender"
                     :name="column.key"
@@ -49,6 +56,7 @@ export interface columnTemplate {
   key: string,
   title: string,
   width: string,
+  ellipsis: boolean,
   scopedSlots: { customRender: string }
 }
 
@@ -73,6 +81,11 @@ export default class CarouselTable extends Vue {
     type: Object,
     default: () => ({}),
   }) bodyStyle: any | undefined;
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  }) bordered: boolean | undefined;
 
   // 格式化column的width
   get getAverageColumnWidth() {
@@ -135,11 +148,55 @@ export default class CarouselTable extends Vue {
 </script>
 
 <style scoped lang="less">
+.tableHead {
+  border: 1px solid #e8e8e8;
+  color: rgba(0, 0, 0, .85);
+  font-weight: 500;
+  background: #fafafa;
+  transition: background .3s ease;
+  //padding: 16px;
+  overflow-wrap: break-word;
+
+  & > div {
+    padding: 16px;
+
+    &.bordered {
+      border-right: 1px solid #e8e8e8;
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+}
+
+.tableContent {
+  border: 1px solid #e8e8e8;
+  border-top: 0;
+  overflow-wrap: break-word;
+  color: rgba(0, 0, 0, .65);
+  font-size: 14px;
+
+  .row {
+    border-bottom: 1px solid #e8e8e8;
+
+    & > div {
+      padding: 16px;
+      &.bordered {
+        border-right: 1px solid #e8e8e8;
+
+        &:last-child {
+          border-right: 0;
+        }
+      }
+    }
+  }
+}
+
 .ant-carousel {
   /deep/ .slick-slider {
     height: 100%;
     width: 100%;
-    background: #364d79;
     overflow: hidden;
 
     .slick-list {

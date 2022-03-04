@@ -5,13 +5,13 @@
 */
 <template>
   <carousel-table style="width: 50vw;height: 50vh;"
-                  :headStyle="{background:'red'}"
                   :bodyStyle="{height:'400px'}"
                   :dataSource="data"
+                  :autoplay="true"
                   :columns="columns">
-    <h1 slot="name" slot-scope="{text}">
-      {{ text }}
-    </h1>
+<!--    <h1 slot="name" slot-scope="{text}">-->
+<!--      {{ text }}-->
+<!--    </h1>-->
   </carousel-table>
 </template>
 
@@ -37,6 +37,7 @@ export default class CarouselTableExample extends Vue {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
+      ellipsis: true,
     },
     {
       title: 'Tags',
@@ -49,7 +50,7 @@ export default class CarouselTableExample extends Vue {
   data = [
     {
       key: '1',
-      name: 'John Brown',
+      name: 'John Brownsdcsdcsdcsdcsdcsdcsdcsdcsdcsdcsdcsdcdsc',
       age: 32,
       address: 'New York No. 1 Lake Park',
       tags: ['nice', 'developer'],
@@ -65,7 +66,7 @@ export default class CarouselTableExample extends Vue {
       key: '3',
       name: 'Joe Black',
       age: 32,
-      address: 'Sidney No. 1 Lake Park',
+      address: 'Sidney No. 1 Lake Parkeververvevervethtyjtththtyhtyhtyhtyhtyhty',
       tags: ['cool', 'teacher'],
     },
     {
