@@ -5,9 +5,9 @@
 */
 <template>
   <div>
-    <div class="flex tableHead">
-      <template v-for="{key,title,width} in columns">
-        <div :style="{width:width||getAverageColumnWidth}"
+    <div class="flex tableHead" :class="{'bordered':bordered}">
+      <template v-for="{key,title,width,align} in columns">
+        <div :style="{width:width||getAverageColumnWidth,textAlign:align||'left'}"
              :key="key"
              :class="{'bordered':bordered}">
           {{
@@ -16,48 +16,57 @@
         </div>
       </template>
     </div>
-    <a-carousel dot-position="right"
+    <a-carousel v-if="dataSource.length>0"
+                dot-position="right"
                 :dots="false"
+                ref="tableContent"
                 class="tableContent"
-                v-bind="$attrs">
+                :class="{'bordered':bordered}"
+                v-bind="{...defaultOption,...$attrs}">
       <template v-for="record,index in dataSource">
-        <div class="row" :key="index">
+        <div class="row" :key="record[rowKey]" @click="emitRowClick({record,index})">
           <template v-for="column in columns">
-            <div :style="{width:column.width||getAverageColumnWidth,wordBreak:'break-all'}"
-                 :class="{'text-cut':column.ellipsis,'bordered':bordered}"
-                 :key="column.key">
+            <div
+              :style="{width:column.width||getAverageColumnWidth,wordBreak:'break-all',textAlign:column.align||'left'}"
+              :class="{'text-cut':column.ellipsis,'bordered':bordered}"
+              :key="column.key||column.dataIndex">
               <slot v-if="column.scopedSlots&&column.scopedSlots.customRender"
-                    :name="column.key"
+                    :name="column.key||column.dataIndex"
                     :text="record[column.scopedSlots.customRender]"
-                    :record="record">
+                    :record="record"
+                    :index="index">
                 {{
-                  record[column.key] || ''
+                  record[column.key || column.dataIndex] || ''
                 }}
               </slot>
               <template v-else>
-                {{ record[column.key] || '' }}
+                {{ record[column.key || column.dataIndex] || '' }}
               </template>
             </div>
           </template>
         </div>
       </template>
     </a-carousel>
+    <slot v-else name="empty">
+      <a-empty class="text-white padding"></a-empty>
+    </slot>
   </div>
 
 </template>
 
 <script lang="ts">
 import {
-  Component, Prop, Vue, Watch,
+  Component, Emit, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 
-export interface columnTemplate {
-  dataIndex: string,
-  key: string,
-  title: string,
-  width: string,
-  ellipsis: boolean,
-  scopedSlots: { customRender: string }
+export interface ColumnTemplate {
+  dataIndex: string;
+  key: string;
+  title: string;
+  width: string;
+  ellipsis: boolean;
+  align: string;
+  scopedSlots: { customRender: string };
 }
 
 @Component({ name: 'CarouselTable' })
@@ -65,7 +74,7 @@ export default class CarouselTable extends Vue {
   @Prop({
     type: Array,
     default: () => ([]),
-  }) columns: columnTemplate[] | undefined;
+  }) columns: ColumnTemplate[] | undefined;
 
   @Prop({
     type: Array,
@@ -87,6 +96,15 @@ export default class CarouselTable extends Vue {
     default: false,
   }) bordered: boolean | undefined;
 
+  @Prop({
+    type: String,
+    default: '',
+  }) rowKey: string | undefined;
+
+  defaultOption = {
+    autoplay: true,
+  };
+
   // 格式化column的width
   get getAverageColumnWidth() {
     let averageColumnWidth = '';
@@ -100,7 +118,7 @@ export default class CarouselTable extends Vue {
       }
     });
 
-    if (count > 0) {
+    if (tempWidth?.length > 0) {
       averageColumnWidth = `calc((100% - ${tempWidth.join(' - ')}) / ${count})`;
     } else {
       averageColumnWidth = `calc(100%  / ${count})`;
@@ -116,13 +134,13 @@ export default class CarouselTable extends Vue {
   handleHeadStyle(newVal, oldVal) {
     if (newVal !== oldVal) {
       this.$nextTick(() => {
-        debugger;
-        const styleValue = Object.entries(newVal)
-          .map(([key, value]) => `${key}:${value}`);
+        if (document.getElementsByClassName('tableHead')?.length > 0) {
+          const styleValue = Object.entries(newVal)
+            .map(([key, value]) => `${key}:${value}`);
 
-        debugger;
-        document.getElementsByClassName('tableHead')[0].setAttribute('style',
-          styleValue.join(';'));
+          document.getElementsByClassName('tableHead')[0].setAttribute('style',
+            styleValue.join(';'));
+        }
       });
     }
   }
@@ -134,28 +152,56 @@ export default class CarouselTable extends Vue {
   handleBodyStyle(newVal, oldVal) {
     if (newVal !== oldVal) {
       this.$nextTick(() => {
-        debugger;
-        const styleValue = Object.entries(newVal)
-          .map(([key, value]) => `${key}:${value}`);
+        if (document.getElementsByClassName('slick-slider')?.length > 0) {
+          const styleValue = Object.entries(newVal)
+            .map(([key, value]) => `${key}:${value}`);
 
-        debugger;
-        document.getElementsByClassName('slick-slider')[0].setAttribute('style',
-          styleValue.join(';'));
+          document.getElementsByClassName('slick-slider')[0].setAttribute('style',
+            styleValue.join(';'));
+        }
       });
     }
+  }
+
+  @Watch('dataSource', {
+    immediate: true,
+    deep: true,
+  })
+  handleDataSource(newVal, oldVal) {
+    if (newVal !== oldVal && newVal.length > 0) {
+      this.$nextTick(() => {
+        if (document.getElementsByClassName('slick-list')?.length > 0) {
+          const rowHeight = document.getElementsByClassName('slick-list')[0].clientHeight || 0;
+          // 这里只能延迟处理
+          setTimeout(() => {
+            document.getElementsByClassName('slick-list')[0].setAttribute('style', `height:${Number(rowHeight) * newVal.length}px`);
+          }, 100);
+        }
+
+        (this.$refs.tableContent as any).goTo(0);
+      });
+    }
+  }
+
+  @Emit('rowClick')
+  emitRowClick(rowData) {
+    return rowData;
   }
 }
 </script>
 
 <style scoped lang="less">
 .tableHead {
-  border: 1px solid #e8e8e8;
   color: rgba(0, 0, 0, .85);
   font-weight: 500;
   background: #fafafa;
   transition: background .3s ease;
-  //padding: 16px;
   overflow-wrap: break-word;
+  box-sizing: border-box;
+
+  &.bordered {
+    border: 1px solid #e8e8e8;
+  }
 
   & > div {
     padding: 16px;
@@ -171,17 +217,32 @@ export default class CarouselTable extends Vue {
 }
 
 .tableContent {
-  border: 1px solid #e8e8e8;
   border-top: 0;
   overflow-wrap: break-word;
   color: rgba(0, 0, 0, .65);
   font-size: 14px;
+  box-sizing: border-box;
+
+  /deep/ .slick-slide {
+    pointer-events: unset;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  &.bordered {
+    border: 1px solid #e8e8e8;
+  }
 
   .row {
     border-bottom: 1px solid #e8e8e8;
 
     & > div {
       padding: 16px;
+      box-sizing: border-box;
+
       &.bordered {
         border-right: 1px solid #e8e8e8;
 
@@ -200,7 +261,7 @@ export default class CarouselTable extends Vue {
     overflow: hidden;
 
     .slick-list {
-      height: 100% !important;
+      //height: 100% !important;
       overflow-y: auto;
 
       .row {

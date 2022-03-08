@@ -6,12 +6,10 @@
 <template>
   <carousel-table style="width: 50vw;height: 50vh;"
                   :bodyStyle="{height:'400px'}"
-                  :dataSource="data"
                   :autoplay="true"
+                  :dataSource="data"
+                  :bordered="true"
                   :columns="columns">
-<!--    <h1 slot="name" slot-scope="{text}">-->
-<!--      {{ text }}-->
-<!--    </h1>-->
   </carousel-table>
 </template>
 
