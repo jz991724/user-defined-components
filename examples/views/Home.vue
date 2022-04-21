@@ -22,6 +22,10 @@
     </borderless-card>
 
     <CarouselTableExample style="margin:auto;"></CarouselTableExample>
+
+    <a-card title="行/列合并">
+      <merger-table-example></merger-table-example>
+    </a-card>
   </div>
 </template>
 
@@ -29,9 +33,11 @@
 import { Component, Vue } from 'vue-property-decorator';
 import BorderlessCardExample from './Card/BorderlessCard_Example.vue';
 import CarouselTableExample from './DataDisplay/CarouselTable_Example.vue';
+import MergerTableExample from './DataDisplay/MergerTable_Example.vue';
 
 @Component({
   components: {
+    MergerTableExample,
     CarouselTableExample,
     BorderlessCardExample,
   },
