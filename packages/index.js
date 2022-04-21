@@ -9,6 +9,7 @@ import DescInfoCard from './DataDisplay/DescInfoBlock';
 
 // DataDisplay
 import CarouselTable from './DataDisplay/CarouselTable';
+import { customRenderMerger } from './Services';
 
 // 组件列表
 const components = [MultipleChoiceBox, RangePicker, TabsModal, BorderlessCard, DescInfoCard, CarouselTable];
@@ -36,6 +37,7 @@ const UserDefinedComponents = {
   TabsModal,
   BorderlessCard,
   DescInfoCard,
+  CustomRenderMerger: customRenderMerger,
 };
 
 export default UserDefinedComponents;
