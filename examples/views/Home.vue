@@ -1,30 +1,36 @@
 <template>
   <div>
-    <borderless-card>
-      <div class="flex response justify-between">
-        <range-picker style="width:400px;" v-model="dates"></range-picker>
+    <!--    <borderless-card>-->
+    <!--      <div class="flex response justify-between">-->
+    <!--        <range-picker style="width:400px;" v-model="dates"></range-picker>-->
 
-        <multiple-choice-box placeholder="请选择"
-                             v-model="value"
-                             :bordered="true"
-                             :required="true"
-                             :tree-data="treeData"></multiple-choice-box>
-      </div>
-    </borderless-card>
+    <!--        <multiple-choice-box placeholder="请选择"-->
+    <!--                             v-model="value"-->
+    <!--                             :bordered="true"-->
+    <!--                             :required="true"-->
+    <!--                             :tree-data="treeData"></multiple-choice-box>-->
+    <!--      </div>-->
+    <!--    </borderless-card>-->
 
-    <!--tabs-->
-    <borderless-card>
-      <!--      <a-locale-provider :locale="locale">-->
-      <!--        <router-view :key="$route.fullPath"></router-view>-->
-      <!--      </a-locale-provider>-->
-      <a-button type="primary" @click="onShowTabsModal()">展示tabsModal</a-button>
-      <tabs-modal ref="tabsModal"></tabs-modal>
-    </borderless-card>
+    <!--    &lt;!&ndash;tabs&ndash;&gt;-->
+    <!--    <borderless-card>-->
+    <!--      &lt;!&ndash;      <a-locale-provider :locale="locale">&ndash;&gt;-->
+    <!--      &lt;!&ndash;        <router-view :key="$route.fullPath"></router-view>&ndash;&gt;-->
+    <!--      &lt;!&ndash;      </a-locale-provider>&ndash;&gt;-->
+    <!--      <a-button type="primary" @click="onShowTabsModal()">展示tabsModal</a-button>-->
+    <!--      <tabs-modal ref="tabsModal"></tabs-modal>-->
+    <!--    </borderless-card>-->
 
-    <CarouselTableExample style="margin:auto;"></CarouselTableExample>
+    <!--    <CarouselTableExample style="margin:auto;"></CarouselTableExample>-->
 
     <a-card title="行/列合并">
       <merger-table-example></merger-table-example>
+    </a-card>
+
+    <a-card title="进度条">
+      <target-progress :strokeWidth="40"
+                       :success-value="80.5333"
+                       :target-list="targetList"></target-progress>
     </a-card>
   </div>
 </template>
@@ -34,9 +40,11 @@ import { Component, Vue } from 'vue-property-decorator';
 import BorderlessCardExample from './Card/BorderlessCard_Example.vue';
 import CarouselTableExample from './DataDisplay/CarouselTable_Example.vue';
 import MergerTableExample from './DataDisplay/MergerTable_Example.vue';
+import TargetProgress from '../../packages/Feedback/TargetProgress.vue';
 
 @Component({
   components: {
+    TargetProgress,
     MergerTableExample,
     CarouselTableExample,
     BorderlessCardExample,
@@ -117,5 +125,22 @@ export default class Home extends Vue {
       tabsModal.show();
     }
   }
+
+  targetList = [{
+    title: '目标',
+    color: 'red',
+    value: 60,
+    size: 30,
+  }, {
+    title: '目标1',
+    color: 'green',
+    value: 100,
+    size: 30,
+  }, {
+    title: '目标2',
+    color: 'yellow',
+    value: 20,
+    size: 30,
+  }];
 }
 </script>

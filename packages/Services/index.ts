@@ -120,7 +120,7 @@ export function customRenderMergerCol(mergerFields, currentField, row) {
   return mergerColDic;
 }
 
-/** 列合并
+/** 行和列合并
  * @author 张俊
  * @date 2022/4/21 10:05
  * @param allRows：数据源（所有需要处理的数据记录）
