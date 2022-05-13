@@ -4,6 +4,26 @@
   </div>
 </template>
 
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
+import moment from 'moment';
+import { copyRightConsole } from '../packages/Services';
+
+const packageInfo = require('../package.json');
+
+@Component({})
+export default class App extends Vue {
+  locale = zhCN;
+
+  created() {
+    // 设置版权休息console
+    copyRightConsole(packageInfo, moment()
+      .format('YYYY-MM-DD HH:mm:ss'));
+  }
+}
+</script>
+
 <style lang="less">
 @import 'styles/colorui/main.css';
 

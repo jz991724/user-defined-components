@@ -126,7 +126,7 @@ export default class MergerTableExample extends Vue {
       address: 'Dublin No. 2 Lake Park',
     },
     {
-      key: '5',
+      key: '6',
       name: '宫城良田',
       age: 18,
       tel: '0575-22098909',
@@ -134,7 +134,7 @@ export default class MergerTableExample extends Vue {
       address: 'Dublin No. 2 Lake Park',
     },
     {
-      key: '5',
+      key: '7',
       name: '樱木花道',
       age: 18,
       tel: '0575-22098909',
@@ -142,7 +142,7 @@ export default class MergerTableExample extends Vue {
       address: 'Dublin No. 2 Lake Park',
     },
     {
-      key: '5',
+      key: '8',
       name: '樱木花道',
       age: 'k',
       tel: 'k',

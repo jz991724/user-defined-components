@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /** 行合并
  * @author 张俊
  * @date 2022/4/21 10:05
@@ -164,4 +166,47 @@ export function customRenderMerger(currentField, value, row, rowMergerParams: { 
       colSpan,
     },
   };
+}
+
+/**
+ * 在console显示package.json的信息
+ * @author 张俊
+ * @date 2022/5/13 9:18
+ * @param 需要打印的数据
+ * @return null
+ */
+export function copyRightConsole(packageInfo, packageDateTime = moment()
+  .format('YYYY-MM-DD HH:mm:ss')) {
+  /* 样式代码 */
+  const projectNameStyle = 'font-size: 20px;font-weight: 600;color: rgb(244,167,89);';
+  const descriptionStyle = 'font-style: oblique;font-size:14px;color: rgb(244,167,89);font-weight: 400;';
+  const versionStyle = 'color: rgb(30,152,255);padding:8px 0 2px;';
+  const contentStyle = 'color: rgb(30,152,255);padding:0 0 2px;';
+  const dateTimeStyle = 'color: rgb(30,152,255);padding:0 0 5px;';
+
+  /* 内容代码 */
+  const {
+    name,
+    description,
+    author,
+    homepage,
+    repository,
+    dependencies,
+  } = packageInfo;
+
+  const projectName = name || '';
+  const version = `版 本 号：${packageInfo.version}    【Ant Design Vue 版本：${dependencies?.['ant-design-vue'] || dependencies?.['ant-design-vue']}】`;
+  const dateTime = `编译日期：${packageDateTime}`;
+
+  const authorInfo = `作   者：${author}`;
+  const homepageInfo = `主   页：${homepage}`;
+  const repositoryInfo = `github地址：${repository?.url}`;
+
+  // 空格有意义，不要格式化
+  console.log(`%c${description} %c${projectName}
+%c${version}
+%c${authorInfo}
+%c${homepageInfo}
+%c${repositoryInfo}
+%c${dateTime}`, projectNameStyle, descriptionStyle, versionStyle, contentStyle, contentStyle, contentStyle, dateTimeStyle);
 }
