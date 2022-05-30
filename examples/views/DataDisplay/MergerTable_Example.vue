@@ -11,7 +11,7 @@
   </a-table>
 </template>
 
-<script lang="ts">
+<script lang="tsx">
 import { Component, Vue } from 'vue-property-decorator';
 import {
   customRenderMerger,
@@ -19,71 +19,6 @@ import {
 
 @Component({ name: 'MergerTableExample' })
 export default class MergerTableExample extends Vue {
-  columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      customRender:
-        (value, row, index) => customRenderMerger(
-          'name', value, row,
-          {
-            allRows: this.dataSource,
-            rowMergerFields: ['name'],
-            rowIndex: index,
-          },
-          ['tel', 'phone'],
-        ),
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      customRender:
-        (value, row, index) => customRenderMerger(
-          'age', value, row,
-          {
-            allRows: this.dataSource,
-            rowMergerFields: ['name', 'age'],
-            rowIndex: index,
-          },
-          ['tel', 'phone'],
-        ),
-    },
-    {
-      title: 'Home phone',
-      colSpan: 2,
-      dataIndex: 'tel',
-      customRender:
-        (value, row, index) => customRenderMerger(
-          'tel', value, row,
-          {
-            allRows: this.dataSource,
-            rowMergerFields: ['name'],
-            rowIndex: index,
-          },
-          ['tel', 'phone'],
-        ),
-    },
-    {
-      title: 'Phone',
-      colSpan: 0,
-      dataIndex: 'phone',
-      customRender:
-        (value, row, index) => customRenderMerger(
-          'phone', value, row,
-          {
-            allRows: this.dataSource,
-            rowMergerFields: ['name'],
-            rowIndex: index,
-          },
-          ['tel', 'phone'],
-        ),
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-    },
-  ];
-
   dataSource = [
     {
       key: '1',
@@ -150,6 +85,93 @@ export default class MergerTableExample extends Vue {
       address: 'k',
     },
   ];
+
+  get columns() {
+    return [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        customRender:
+          (value, row, index) => {
+            const options: any = customRenderMerger(
+              'name', value, row,
+              {
+                allRows: this.dataSource,
+                rowMergerFields: ['name'],
+                rowIndex: index,
+              },
+              ['tel', 'phone'],
+            );
+
+            options.attrs = {
+              ...options.attrs,
+              style: ' background-color: #FAFAFA;',
+            };
+
+            return {
+              ...options,
+              children:
+                <span>{value}
+                  <a-popover title="规则" trigger="hover" placement="left">
+                    <div slot="content" style="width: 400px;">
+                      首先取相应间隔距离样点评价中最差的点，然后按间隔从小到大排序，取所有样点未超标的最小间隔为最终影响距离。
+                    </div>
+                    <a-icon type="info-circle" theme="twoTone"/>
+                  </a-popover>
+                </span>,
+            };
+          },
+      },
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        customRender:
+          (value, row, index) => customRenderMerger(
+            'age', value, row,
+            {
+              allRows: this.dataSource,
+              rowMergerFields: ['name', 'age'],
+              rowIndex: index,
+            },
+            ['tel', 'phone'],
+          ),
+      },
+      {
+        title: 'Home phone',
+        colSpan: 2,
+        dataIndex: 'tel',
+        customRender:
+          (value, row, index) => customRenderMerger(
+            'tel', value, row,
+            {
+              allRows: this.dataSource,
+              rowMergerFields: ['name'],
+              rowIndex: index,
+            },
+            ['tel', 'phone'],
+          ),
+      },
+      {
+        title: 'Phone',
+        colSpan: 0,
+        dataIndex: 'phone',
+        customRender:
+          (value, row, index) => customRenderMerger(
+            'phone', value, row,
+            {
+              allRows: this.dataSource,
+              rowMergerFields: ['name'],
+              rowIndex: index,
+            },
+            ['tel', 'phone'],
+          ),
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+      },
+    ];
+  }
 }
 </script>
 
