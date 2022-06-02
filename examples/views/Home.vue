@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="padding-sm">
     <!--    <borderless-card>-->
     <!--      <div class="flex response justify-between">-->
     <!--        <range-picker style="width:400px;" v-model="dates"></range-picker>-->
@@ -23,14 +23,18 @@
 
     <!--    <CarouselTableExample style="margin:auto;"></CarouselTableExample>-->
 
-    <a-card title="行/列合并">
-      <merger-table-example></merger-table-example>
-    </a-card>
+    <!--    <a-card title="行/列合并">-->
+    <!--      <merger-table-example></merger-table-example>-->
+    <!--    </a-card>-->
 
-    <a-card title="进度条">
-      <target-progress :strokeWidth="40"
-                       :success-value="80.5333"
-                       :target-list="targetList"></target-progress>
+    <!--    <a-card title="进度条">-->
+    <!--      <target-progress :strokeWidth="40"-->
+    <!--                       :success-value="80.5333"-->
+    <!--                       :target-list="targetList"></target-progress>-->
+    <!--    </a-card>-->
+
+    <a-card title="流程图" style="width: 100%">
+      <diagram-example></diagram-example>
     </a-card>
   </div>
 </template>
@@ -41,9 +45,11 @@ import BorderlessCardExample from './Card/BorderlessCard_Example.vue';
 import CarouselTableExample from './DataDisplay/CarouselTable_Example.vue';
 import MergerTableExample from './DataDisplay/MergerTable_Example.vue';
 import TargetProgress from '../../packages/Feedback/TargetProgress.vue';
+import DiagramExample from './DataDisplay/Diagram_Example.vue';
 
 @Component({
   components: {
+    DiagramExample,
     TargetProgress,
     MergerTableExample,
     CarouselTableExample,
