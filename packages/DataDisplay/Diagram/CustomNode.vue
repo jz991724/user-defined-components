@@ -1,0 +1,63 @@
+/**
+* @描述: CustomNode 自定义节点
+* @作者: 张俊
+* @创建时间: 2022-06-02 11:55:43
+*/
+<template>
+  <div class="flex">
+    <div v-if="nodeData.tags&&nodeData.tags.length>0">
+      <a-tag v-for="tag,index in nodeData.tags"
+             :key="index"
+             color="transparent"
+             class="text-bold"
+             :style="{marginTop:index===0?0:'5px',color:'#fff',borderColor:'#fff'}">{{ tag }}
+      </a-tag>
+    </div>
+    <a-button :type="nodeData.state?nodeData.state:'primary'"
+              shape="circle"
+              style="font-size:10px;margin: auto;border-color: #fff;">
+      {{ nodeData.name }}
+    </a-button>
+    <div v-if="nodeData.outsideLabel"
+         class="text-white text-bold"
+         style="width: 100px;margin:auto 5px;">
+      {{ nodeData.outsideLabel || '' }}
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import {
+  Component, Inject, Prop, Vue,
+} from 'vue-property-decorator';
+
+@Component({ name: 'CustomNode' })
+export default class CustomNode extends Vue {
+  @Inject() getGraph: any;
+
+  @Inject() getNode: any;
+
+  node;
+
+  graph;
+
+  nodeData: any = {};
+
+  mounted() {
+    this.node = this.getNode();
+    this.graph = this.getGraph();
+
+    this.nodeData = this.node.getData();
+    debugger;
+
+    // 监听数据改变事件
+    this.node.on('change:data', (params) => {
+      debugger;
+    });
+  }
+}
+</script>
+
+<style scoped lang="less">
+
+</style>

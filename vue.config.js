@@ -16,4 +16,11 @@ module.exports = {
       .use('babel')
       .loader('babel-loader');
   },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        vue$: 'vue/dist/vue.esm.js',
+      },
+    },
+  },
 };

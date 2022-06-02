@@ -1,177 +1,193 @@
 /**
-* @描述: Diagram（基于AntV G6）
+* @描述: Diagram（基于AntV X6）
 * @作者: 张俊
 * @创建时间: 2022-06-01 15:51:02
 */
 <template>
-  <div ref="mountNode" style="height: 100%;width: 100%"></div>
+  <div>
+    <div ref="mountNode" style="height: 100%;width: 100%"></div>
+  </div>
 </template>
 
 <script lang="ts">
 import {
   Component, Prop, Vue, Watch,
 } from 'vue-property-decorator';
-import G6 from '@antv/g6';
-import insertCss from 'insert-css';
-import * as stream from 'stream';
+import { Graph } from '@antv/x6';
+import '@antv/x6-vue-shape';
+import { DagreLayout } from '@antv/layout';
+import CustomNode from './CustomNode.vue';
 
 export interface DiagramData {
   nodes: any[],
   edges: any[]
 }
 
-@Component({ name: 'Diagram' })
+@Component({
+  name: 'Diagram',
+})
 export default class Diagram extends Vue {
   @Prop({ type: Object, default: () => ({}) }) dataSource: DiagramData | undefined;
 
   // 图的布局类型
   @Prop({ type: String, default: 'dagre' }) type: string | undefined
 
-  graphG6;
+  @Prop({ type: String, default: '#029C9C' }) backgroundColor: string | undefined
+
+  graph;
+
+  // 注册所有的自定义node
+  registerNodes() {
+    Graph.registerNode('custom-node', {
+      inherit: 'vue-shape',
+      width: 150,
+      height: 35,
+      component: {
+        template: '<custom-node/>',
+        components: { CustomNode },
+      },
+    });
+  }
+
+  // 注册所有的自定义edge
+  registerEdges() {
+    Graph.registerEdge(
+      'yellow-edge', // 边名称
+      {
+        // 基类
+        inherit: 'edge',
+        // 属性样式
+        attrs: {
+          line: {
+            stroke: '#BFCB5B',
+          },
+        },
+        // 默认标签
+        defaultLabel: {
+          markup: [
+            {
+              tagName: 'rect',
+              selector: 'body',
+            },
+            {
+              tagName: 'text',
+              selector: 'label',
+            },
+          ],
+          attrs: {
+            label: {
+              fill: '#fff',
+              fontSize: 12,
+              textAnchor: 'middle',
+              textVerticalAnchor: 'middle',
+              pointerEvents: 'none',
+            },
+            body: {
+              ref: 'label',
+              fill: this.backgroundColor,
+              stroke: '#BFCB5B',
+              strokeWidth: 2,
+              rx: 4,
+              ry: 4,
+              refWidth: '140%',
+              refHeight: '140%',
+              refX: '-20%',
+              refY: '-20%',
+            },
+          },
+          position: {
+            distance: 100, // 绝对定位
+            options: {
+              absoluteDistance: true,
+            },
+          },
+        },
+      },
+    );
+  }
 
   // 初始化
-  initGraphG6(data = this.dataSource) {
-    const mountNode: any = this.$el;
+  initGraph(data = this.dataSource) {
+    const { mountNode }: any = this.$refs;
     const width = mountNode.scrollWidth;
     const height = mountNode.scrollHeight || 500;
 
-    G6.registerNode(
-      'sql',
-      {
-        drawShape(cfg: any, group) {
-          const rect = group.addShape('rect', {
-            attrs: {
-              x: -75,
-              y: -25,
-              width: 150,
-              height: 50,
-              radius: 10,
-              stroke: '#5B8FF9',
-              fill: '#C6E5FF',
-              lineWidth: 3,
-            },
-            name: 'rect-shape',
-          });
-          if (cfg.name) {
-            group.addShape('text', {
-              attrs: {
-                text: cfg.name,
-                x: 0,
-                y: 0,
-                fill: '#00287E',
-                fontSize: 14,
-                textAlign: 'center',
-                textBaseline: 'middle',
-                fontWeight: 'bold',
-              },
-              name: 'text-shape',
-            });
-          }
-          return rect;
-        },
-      },
-      'single-node',
-    );
-
-    this.graphG6 = new G6.Graph({
-      container: mountNode, // String | HTMLElement，必须，在 Step 1 中创建的容器 id 或容器本身
-      width, // Number，必须，图的宽度
-      height, // Number，必须，图的高度
-      fitView: true, // 是否开启画布自适应。开启后图自动适配画布大小
-      layout: {
-        type: this.type, // dagre：层次布局；
-        nodesepFunc: (d) => {
-          if (d.id === '3') {
-            return 500;
-          }
-          return 50;
-        },
-        ranksep: 70,
-        controlPoints: true,
-        rankdir: 'BT',
-      },
-      defaultNode: {
-        type: 'sql',
-      },
-      defaultEdge: {
-        type: 'polyline',
-        style: {
-          radius: 20,
-          offset: 45,
-          endArrow: true,
-          lineWidth: 2,
-          stroke: '#C2C8D5',
-        },
-      },
-      nodeStateStyles: {
-        selected: {
-          stroke: '#d9d9d9',
-          fill: '#5394ef',
-        },
-      },
-      modes: {
-        default: [
-          'drag-canvas',
-          'zoom-canvas',
-          'click-select',
-          {
-            type: 'tooltip',
-            formatText(model) {
-              const cfg = model.conf;
-              const text = [];
-              cfg.forEach((row: any) => {
-                text.push(`${row.label}:${row.value}<br>`);
-              });
-              return text.join('\n');
-            },
-            offset: 30,
-          },
-        ],
+    this.graph = new Graph({
+      container: mountNode,
+      width,
+      height,
+      autoResize: true, // 是否监听容器大小改变，并自动更新画布大小。
+      panning: false, // 画布是否可以拖动
+      background: {
+        color: this.backgroundColor, // 设置画布背景颜色
       },
     });
 
-    this.graphG6.data(data);
-    this.graphG6.render();
+    this.updateData(data);
   }
 
-  // 设置样式
-  initGraphCss() {
-    // 我们用 insert-css 演示引入自定义样式
-    // 推荐将样式添加到自己的样式文件中
-    // 若拷贝官方代码，别忘了 npm install insert-css
-    insertCss(`
-    .g6-tooltip {
-    border-radius: 6px;
-    font-size: 12px;
-    color: #fff;
-    background-color: #000;
-    padding: 2px 8px;
-    text-align: center;
-  }`);
-  }
+  // 添加/更新数据
+  updateData(data = this.dataSource) {
+    const dagreLayout = new DagreLayout({
+      type: 'dagre',
+      rankdir: 'BT',
+      align: 'UR',
+      ranksep: 30,
+      nodesep: 50,
+      controlPoints: false,
+    });
 
-  created() {
-    this.initGraphCss();
+    const newModel = dagreLayout.layout(data);
+
+    this.graph.fromJSON(newModel);
+
+    // const parent = this.graph.addNode({
+    //   x: 40,
+    //   y: 40,
+    //   width: 360,
+    //   height: 160,
+    //   zIndex: 1,
+    //   label: 'Parent\n(try to move me)',
+    //   attrs: {
+    //     label: { refY: 140 },
+    //     body: {
+    //       fill: '#fffbe6',
+    //     },
+    //   },
+    // });
+    //
+    // const target = this.graph.addNode({
+    //   x: 280,
+    //   y: 80,
+    //   width: 80,
+    //   height: 40,
+    //   label: 'Child\n(target)',
+    //   zIndex: 10,
+    //   attrs: {
+    //     body: {
+    //       stroke: 'none',
+    //       fill: '#47C769',
+    //     },
+    //     label: {
+    //       fill: '#fff',
+    //     },
+    //   },
+    // });
+    //
+    // parent.addChild(target);
   }
 
   mounted() {
-    this.initGraphG6();
-
-    if (typeof window !== 'undefined') {
-      window.onresize = () => {
-        if (!this.graphG6 || this.graphG6.get('destroyed')) {
-          return;
-        }
-        this.graphG6.changeSize(this.$el.scrollWidth, this.$el.scrollHeight);
-      };
-    }
+    this.registerNodes();
+    this.registerEdges();
+    this.initGraph();
   }
 
   // 监听数据源
   @Watch('dataSource', { deep: true })
   handleDataSourceChange(newVal, oldVal) {
-    if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-      this.initGraphG6();
+    if (JSON.stringify(newVal) !== JSON.stringify(oldVal) && this.graph) {
+      this.updateData(newVal);
     }
   }
 }
