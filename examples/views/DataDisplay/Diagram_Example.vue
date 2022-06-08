@@ -4,7 +4,7 @@
 * @创建时间: 2022-06-01 15:57:26
 */
 <template>
-  <diagram :dataSource="data"></diagram>
+  <diagram :dataSource="data" style="height: 80vh;"></diagram>
 </template>
 
 <script lang="ts">
@@ -12,78 +12,256 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({ name: 'DiagramExample' })
 export default class DiagramExample extends Vue {
-  data: any = {
-    // 节点
+  // data: any = {
+  //   // 节点
+  //   nodes: [
+  //     {
+  //       id: 'node2', // String，可选，节点的唯一标识
+  //       shape: 'custom-node',
+  //       data: {
+  //         name: '测试',
+  //         state: 'danger',
+  //         tags: ['小朋友', '二条街'],
+  //         outsideLabel: '测试11acsdcsddcsdcsd',
+  //       },
+  //     },
+  //     {
+  //       id: 'node3', // String，可选，节点的唯一标识
+  //       shape: 'custom-node',
+  //       label: 'hello', // String，节点标签
+  //       data: {
+  //         name: '测试',
+  //         state: '',
+  //       },
+  //     },
+  //     {
+  //       id: 'node4', // String，节点的唯一标识
+  //       width: 80, // Number，可选，节点大小的 width 值
+  //       height: 40, // Number，可选，节点大小的 height 值
+  //       label: 'world', // String，节点标签
+  //     },
+  //   ],
+  //   // 边
+  //   edges: [
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: ['边label'],
+  //       source: 'node2', // String，必须，起始节点 id
+  //       target: 'node3', // String，必须，目标节点 id
+  //     },
+  //     {
+  //       source: 'node2', // String，必须，起始节点 id
+  //       target: 'node4', // String，必须，目标节点 id
+  //     },
+  //   ],
+  // };
+
+  data = {
     nodes: [
       {
-        id: 'node2', // String，可选，节点的唯一标识
+        id: 'edb94526d5d34c2dacde56c692ac5048',
         shape: 'custom-node',
         data: {
-          name: '测试',
+          id: 'edb94526d5d34c2dacde56c692ac5048',
+          name: '2022',
+          mc: 'aaaa',
           state: 'danger',
-          tags: ['小朋友', '二条街'],
-          outsideLabel: '测试11acsdcsddcsdcsd',
+          tags: [
+            '出让收益',
+          ],
+          outsideLabel: '注销',
         },
       },
       {
-        id: 'node3', // String，可选，节点的唯一标识
+        id: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
         shape: 'custom-node',
-        label: 'hello', // String，节点标签
         data: {
-          name: '测试',
-          state: '',
+          id: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+          name: '2022',
+          mc: 'aaaa',
+          state: null,
+          tags: [
+            '矿业权更新',
+          ],
+          outsideLabel: '变更',
         },
       },
       {
-        id: 'node4', // String，节点的唯一标识
-        width: 80, // Number，可选，节点大小的 width 值
-        height: 40, // Number，可选，节点大小的 height 值
-        label: 'world', // String，节点标签
+        id: '7067103e01794a419334690f10c6293c',
+        shape: 'custom-node',
+        data: {
+          id: '7067103e01794a419334690f10c6293c',
+          name: '2022',
+          mc: 'aaaa',
+          state: null,
+          tags: [
+            '矿业权更新',
+          ],
+          outsideLabel: '变更',
+        },
+      },
+      {
+        id: 'b83f3407fc2544a797b882f878ff8f6f',
+        shape: 'custom-node',
+        data: {
+          id: 'b83f3407fc2544a797b882f878ff8f6f',
+          name: '2022',
+          mc: 'aaaa',
+          state: null,
+          tags: [
+            '矿业权更新',
+          ],
+          outsideLabel: '新立',
+        },
+      },
+      {
+        id: 'f88bdc435b984ac6882158fe16642782',
+        shape: 'custom-node',
+        data: {
+          id: 'f88bdc435b984ac6882158fe16642782',
+          name: '2022',
+          mc: 'aaaa',
+          state: null,
+          tags: [
+            '矿业权更新',
+          ],
+          outsideLabel: '变更',
+        },
       },
     ],
-    // 边
     edges: [
       {
         shape: 'yellow-edge',
-        labels: ['边label'],
-        source: 'node2', // String，必须，起始节点 id
-        target: 'node3', // String，必须，目标节点 id
+        labels: null,
+        source: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+        target: '7067103e01794a419334690f10c6293c',
       },
       {
-        source: 'node2', // String，必须，起始节点 id
-        target: 'node4', // String，必须，目标节点 id
+        shape: 'yellow-edge',
+        labels: null,
+        source: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+        target: 'f88bdc435b984ac6882158fe16642782',
+      },
+      {
+        shape: 'yellow-edge',
+        labels: null,
+        source: '7067103e01794a419334690f10c6293c',
+        target: 'edb94526d5d34c2dacde56c692ac5048',
+      },
+      {
+        shape: 'yellow-edge',
+        labels: null,
+        source: 'b83f3407fc2544a797b882f878ff8f6f',
+        target: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+      },
+      {
+        shape: 'yellow-edge',
+        labels: null,
+        source: 'f88bdc435b984ac6882158fe16642782',
+        target: 'edb94526d5d34c2dacde56c692ac5048',
       },
     ],
-  };
+  }
 
-  // mounted() {
-  //   setTimeout(() => {
-  //     this.data = {
-  //       // 节点
-  //       nodes: [
-  //         ...this.data.nodes,
-  //         {
-  //           id: 'node10', // String，可选，节点的唯一标识
-  //           shape: 'custom-node',
-  //           label: 'hello', // String，节点标签
-  //         },
-  //         {
-  //           id: 'node20', // String，节点的唯一标识
-  //           label: 'world', // String，节点标签
-  //           width: 80, // Number，可选，节点大小的 width 值
-  //           height: 40, // Number，可选，节点大小的 height 值
-  //         },
-  //       ],
-  //       // 边
-  //       edges: [
-  //         ...this.data.edges,
-  //         {
-  //           source: 'node10', // String，必须，起始节点 id
-  //           target: 'node20', // String，必须，目标节点 id
-  //         },
-  //       ],
-  //     };
-  //   }, 5000);
+  // data = {
+  //   nodes: [
+  //     {
+  //       id: 'de635b9043bf48a48df6c4fcc84f3014',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: 'de635b9043bf48a48df6c4fcc84f3014',
+  //         name: '2021',
+  //         mc: '555',
+  //         state: 'danger',
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '注销',
+  //       },
+  //     },
+  //     {
+  //       id: '19be9c4b99514684807c851149119088',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: '19be9c4b99514684807c851149119088',
+  //         name: 'null',
+  //         mc: '222',
+  //         state: null,
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '新立',
+  //       },
+  //     },
+  //     {
+  //       id: 'd214ff3b04f3483fbbd40b6924c95a19',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: 'd214ff3b04f3483fbbd40b6924c95a19',
+  //         name: 'null',
+  //         mc: '222',
+  //         state: null,
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '延续',
+  //       },
+  //     },
+  //     {
+  //       id: '0f500b6838394484a24fe7dc1f5c75cf',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: '0f500b6838394484a24fe7dc1f5c75cf',
+  //         name: 'null',
+  //         mc: '222',
+  //         state: null,
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '延续',
+  //       },
+  //     },
+  //     {
+  //       id: '6f7e8206976244b5ad82f01ffd41abb3',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: '6f7e8206976244b5ad82f01ffd41abb3',
+  //         name: 'null',
+  //         mc: '444',
+  //         state: null,
+  //         tags: [
+  //           '出让收益',
+  //         ],
+  //         outsideLabel: '延续',
+  //       },
+  //     },
+  //   ],
+  //   edges: [
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: '19be9c4b99514684807c851149119088',
+  //       target: 'd214ff3b04f3483fbbd40b6924c95a19',
+  //     },
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: '6f7e8206976244b5ad82f01ffd41abb3',
+  //       target: 'de635b9043bf48a48df6c4fcc84f3014',
+  //     },
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: 'd214ff3b04f3483fbbd40b6924c95a19',
+  //       target: '0f500b6838394484a24fe7dc1f5c75cf',
+  //     },
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: '0f500b6838394484a24fe7dc1f5c75cf',
+  //       target: '6f7e8206976244b5ad82f01ffd41abb3',
+  //     },
+  //   ],
   // }
 }
 </script>

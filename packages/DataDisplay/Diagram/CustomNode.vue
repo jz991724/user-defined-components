@@ -4,8 +4,10 @@
 * @创建时间: 2022-06-02 11:55:43
 */
 <template>
-  <div class="flex">
-    <div v-if="nodeData.tags&&nodeData.tags.length>0">
+  <div>
+    <div v-if="nodeData.tags&&nodeData.tags.length>0"
+         class="text-right"
+         style="position: absolute;right: 45px;bottom: 8px;">
       <a-tag v-for="tag,index in nodeData.tags"
              :key="index"
              color="transparent"
@@ -15,12 +17,12 @@
     </div>
     <a-button :type="nodeData.state?nodeData.state:'primary'"
               shape="circle"
-              style="font-size:10px;margin: auto;border-color: #fff;">
+              style="font-size:10px;border-color: #fff;">
       {{ nodeData.name }}
     </a-button>
     <div v-if="nodeData.outsideLabel"
-         class="text-white text-bold"
-         style="width: 100px;margin:auto 5px;">
+         class="text-white text-bold text-left"
+         style="max-width: 100px;position: absolute;left: 45px;bottom: 0;white-space: nowrap;padding:10px 0;">
       {{ nodeData.outsideLabel || '' }}
     </div>
   </div>

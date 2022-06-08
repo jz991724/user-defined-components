@@ -4,9 +4,7 @@
 * @创建时间: 2022-06-01 15:51:02
 */
 <template>
-  <div>
-    <div ref="mountNode" style="height: 100%;width: 100%"></div>
-  </div>
+  <div ref="mountNode"></div>
 </template>
 
 <script lang="ts">
@@ -40,7 +38,7 @@ export default class Diagram extends Vue {
   registerNodes() {
     Graph.registerNode('custom-node', {
       inherit: 'vue-shape',
-      width: 150,
+      width: 50,
       height: 35,
       component: {
         template: '<custom-node/>',
@@ -121,6 +119,28 @@ export default class Diagram extends Vue {
       background: {
         color: this.backgroundColor, // 设置画布背景颜色
       },
+      scroller: false,
+      translating: { // 限制子节点的移动
+        restrict(view) {
+          const { cell } = view;
+          if (cell.isNode()) {
+            const parent = cell.getParent();
+            if (parent) {
+              return parent.getBBox();
+            }
+          }
+
+          return null;
+        },
+      },
+    });
+
+    // 初始化node的事件
+    this.graph.on('node:click', ({
+                                   e, x, y, node, view,
+                                 }) => {
+      e.stopPropagation();
+      console.log('nodeData:', node.getData());
     });
 
     this.updateData(data);
@@ -129,7 +149,7 @@ export default class Diagram extends Vue {
   // 添加/更新数据
   updateData(data = this.dataSource) {
     const dagreLayout = new DagreLayout({
-      type: 'dagre',
+      type: 'dagre', // 流程图
       rankdir: 'BT',
       align: 'UR',
       ranksep: 30,
@@ -140,6 +160,8 @@ export default class Diagram extends Vue {
     const newModel = dagreLayout.layout(data);
 
     this.graph.fromJSON(newModel);
+    // 这个居中操作必须在更新数据后调用，否则不起作用
+    this.graph.centerContent();
 
     // const parent = this.graph.addNode({
     //   x: 40,
@@ -147,7 +169,7 @@ export default class Diagram extends Vue {
     //   width: 360,
     //   height: 160,
     //   zIndex: 1,
-    //   label: 'Parent\n(try to move me)',
+    //   label: '保山怒江金矿',
     //   attrs: {
     //     label: { refY: 140 },
     //     body: {
@@ -157,8 +179,8 @@ export default class Diagram extends Vue {
     // });
     //
     // const target = this.graph.addNode({
-    //   x: 280,
-    //   y: 80,
+    //   x: 0,
+    //   y: 0,
     //   width: 80,
     //   height: 40,
     //   label: 'Child\n(target)',
@@ -167,8 +189,9 @@ export default class Diagram extends Vue {
     //     body: {
     //       stroke: 'none',
     //       fill: '#47C769',
-    //     },
-    //     label: {
+    //     },‘
+
+    //     label: {-【】
     //       fill: '#fff',
     //     },
     //   },
