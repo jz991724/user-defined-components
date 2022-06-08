@@ -4,7 +4,7 @@
 * @创建时间: 2022-06-01 15:51:02
 */
 <template>
-  <div ref="mountNode"></div>
+  <div ref="mountNode" style="width: 100%;height: 100%;"></div>
 </template>
 
 <script lang="ts">
@@ -120,19 +120,19 @@ export default class Diagram extends Vue {
         color: this.backgroundColor, // 设置画布背景颜色
       },
       scroller: false,
-      translating: { // 限制子节点的移动
-        restrict(view) {
-          const { cell } = view;
-          if (cell.isNode()) {
-            const parent = cell.getParent();
-            if (parent) {
-              return parent.getBBox();
-            }
-          }
-
-          return null;
-        },
-      },
+      // translating: { // 限制子节点的移动
+      //   restrict(view) {
+      //     const { cell } = view;
+      //     if (cell.isNode()) {
+      //       const parent = cell.getParent();
+      //       if (parent) {
+      //         return parent.getBBox();
+      //       }
+      //     }
+      //
+      //     return null;
+      //   },
+      // },
     });
 
     // 初始化node的事件

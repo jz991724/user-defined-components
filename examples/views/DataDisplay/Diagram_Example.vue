@@ -4,7 +4,7 @@
 * @创建时间: 2022-06-01 15:57:26
 */
 <template>
-  <diagram :dataSource="data" style="height: 80vh;"></diagram>
+  <diagram :dataSource="data"></diagram>
 </template>
 
 <script lang="ts">
