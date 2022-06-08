@@ -56,6 +56,142 @@ export default class DiagramExample extends Vue {
   //   ],
   // };
 
+  // data = {
+  //   nodes: [
+  //     {
+  //       id: 'edb94526d5d34c2dacde56c692ac5048',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: 'edb94526d5d34c2dacde56c692ac5048',
+  //         name: '2022',
+  //         mc: 'aaaa',
+  //         state: 'danger',
+  //         tags: [
+  //           '出让收益',
+  //         ],
+  //         outsideLabel: '注销',
+  //       },
+  //     },
+  //     {
+  //       id: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+  //         name: '2022',
+  //         mc: 'aaaa',
+  //         state: null,
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '变更',
+  //       },
+  //     },
+  //     {
+  //       id: '7067103e01794a419334690f10c6293c',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: '7067103e01794a419334690f10c6293c',
+  //         name: '2022',
+  //         extraData: {
+  //           mc: 'aaaa',
+  //         },
+  //         state: null,
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '变更',
+  //       },
+  //     },
+  //     {
+  //       id: 'b83f3407fc2544a797b882f878ff8f6f',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: 'b83f3407fc2544a797b882f878ff8f6f',
+  //         name: '2022',
+  //         mc: 'aaaa',
+  //         state: null,
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '新立',
+  //       },
+  //     },
+  //     {
+  //       id: 'f88bdc435b984ac6882158fe16642782',
+  //       shape: 'custom-node',
+  //       data: {
+  //         id: 'f88bdc435b984ac6882158fe16642782',
+  //         name: '2022',
+  //         mc: 'aaaa',
+  //         state: null,
+  //         tags: [
+  //           '矿业权更新',
+  //         ],
+  //         outsideLabel: '变更',
+  //       },
+  //     },
+  //     // {
+  //     //   id: 'test',
+  //     //   zIndex: -1,
+  //     //   label: '保山怒江金矿',
+  //     //   attrs: {
+  //     //     label: { fill: '#fff' },
+  //     //     body: {
+  //     //       stroke: 'red',
+  //     //       fill: 'transparent',
+  //     //     },
+  //     //   },
+  //     //   children:
+  //     //     ['edb94526d5d34c2dacde56c692ac5048', 'f88bdc435b984ac6882158fe16642782', '4f46d95ac7c44b9a9668ffb6e5e8d30f', 'b83f3407fc2544a797b882f878ff8f6f'],
+  //     // },
+  //     // {
+  //     //   id: 'test1',
+  //     //   zIndex: -1,
+  //     //   label: '保山怒江金矿1',
+  //     //   attrs: {
+  //     //     label: { fill: '#fff' },
+  //     //     body: {
+  //     //       stroke: 'red',
+  //     //       fill: 'transparent',
+  //     //     },
+  //     //   },
+  //     //   children: ['7067103e01794a419334690f10c6293c'],
+  //     // },
+  //   ],
+  //   edges: [
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+  //       target: '7067103e01794a419334690f10c6293c',
+  //     },
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+  //       target: 'f88bdc435b984ac6882158fe16642782',
+  //     },
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: '7067103e01794a419334690f10c6293c',
+  //       target: 'edb94526d5d34c2dacde56c692ac5048',
+  //     },
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: 'b83f3407fc2544a797b882f878ff8f6f',
+  //       target: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+  //     },
+  //     {
+  //       shape: 'yellow-edge',
+  //       labels: null,
+  //       source: 'f88bdc435b984ac6882158fe16642782',
+  //       target: 'edb94526d5d34c2dacde56c692ac5048',
+  //     },
+  //   ],
+  // }
+
   data = {
     nodes: [
       {
@@ -64,12 +200,15 @@ export default class DiagramExample extends Vue {
         data: {
           id: 'edb94526d5d34c2dacde56c692ac5048',
           name: '2022',
-          mc: 'aaaa',
           state: 'danger',
           tags: [
             '出让收益',
           ],
           outsideLabel: '注销',
+          extraData: {
+            mc: 'aaaa',
+            fwzb: '1,4,1,3020203.90,34590379.50,2,3020048.40,34592233.00,3,3019150.20,34592304.60,4,3018953.60,34590359.60,2800,1860,,1,',
+          },
         },
       },
       {
@@ -78,12 +217,15 @@ export default class DiagramExample extends Vue {
         data: {
           id: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
           name: '2022',
-          mc: 'aaaa',
           state: null,
           tags: [
             '矿业权更新',
           ],
           outsideLabel: '变更',
+          extraData: {
+            mc: 'aaaa',
+            fwzb: '',
+          },
         },
       },
       {
@@ -92,12 +234,15 @@ export default class DiagramExample extends Vue {
         data: {
           id: '7067103e01794a419334690f10c6293c',
           name: '2022',
-          mc: 'aaaa',
           state: null,
           tags: [
             '矿业权更新',
           ],
           outsideLabel: '变更',
+          extraData: {
+            mc: 'aaaa',
+            fwzb: '',
+          },
         },
       },
       {
@@ -106,12 +251,15 @@ export default class DiagramExample extends Vue {
         data: {
           id: 'b83f3407fc2544a797b882f878ff8f6f',
           name: '2022',
-          mc: 'aaaa',
           state: null,
           tags: [
             '矿业权更新',
           ],
           outsideLabel: '新立',
+          extraData: {
+            mc: 'aaaa',
+            fwzb: '',
+          },
         },
       },
       {
@@ -120,12 +268,15 @@ export default class DiagramExample extends Vue {
         data: {
           id: 'f88bdc435b984ac6882158fe16642782',
           name: '2022',
-          mc: 'aaaa',
           state: null,
           tags: [
             '矿业权更新',
           ],
           outsideLabel: '变更',
+          extraData: {
+            mc: 'aaaa',
+            fwzb: '',
+          },
         },
       },
     ],
@@ -162,107 +313,6 @@ export default class DiagramExample extends Vue {
       },
     ],
   }
-
-  // data = {
-  //   nodes: [
-  //     {
-  //       id: 'de635b9043bf48a48df6c4fcc84f3014',
-  //       shape: 'custom-node',
-  //       data: {
-  //         id: 'de635b9043bf48a48df6c4fcc84f3014',
-  //         name: '2021',
-  //         mc: '555',
-  //         state: 'danger',
-  //         tags: [
-  //           '矿业权更新',
-  //         ],
-  //         outsideLabel: '注销',
-  //       },
-  //     },
-  //     {
-  //       id: '19be9c4b99514684807c851149119088',
-  //       shape: 'custom-node',
-  //       data: {
-  //         id: '19be9c4b99514684807c851149119088',
-  //         name: 'null',
-  //         mc: '222',
-  //         state: null,
-  //         tags: [
-  //           '矿业权更新',
-  //         ],
-  //         outsideLabel: '新立',
-  //       },
-  //     },
-  //     {
-  //       id: 'd214ff3b04f3483fbbd40b6924c95a19',
-  //       shape: 'custom-node',
-  //       data: {
-  //         id: 'd214ff3b04f3483fbbd40b6924c95a19',
-  //         name: 'null',
-  //         mc: '222',
-  //         state: null,
-  //         tags: [
-  //           '矿业权更新',
-  //         ],
-  //         outsideLabel: '延续',
-  //       },
-  //     },
-  //     {
-  //       id: '0f500b6838394484a24fe7dc1f5c75cf',
-  //       shape: 'custom-node',
-  //       data: {
-  //         id: '0f500b6838394484a24fe7dc1f5c75cf',
-  //         name: 'null',
-  //         mc: '222',
-  //         state: null,
-  //         tags: [
-  //           '矿业权更新',
-  //         ],
-  //         outsideLabel: '延续',
-  //       },
-  //     },
-  //     {
-  //       id: '6f7e8206976244b5ad82f01ffd41abb3',
-  //       shape: 'custom-node',
-  //       data: {
-  //         id: '6f7e8206976244b5ad82f01ffd41abb3',
-  //         name: 'null',
-  //         mc: '444',
-  //         state: null,
-  //         tags: [
-  //           '出让收益',
-  //         ],
-  //         outsideLabel: '延续',
-  //       },
-  //     },
-  //   ],
-  //   edges: [
-  //     {
-  //       shape: 'yellow-edge',
-  //       labels: null,
-  //       source: '19be9c4b99514684807c851149119088',
-  //       target: 'd214ff3b04f3483fbbd40b6924c95a19',
-  //     },
-  //     {
-  //       shape: 'yellow-edge',
-  //       labels: null,
-  //       source: '6f7e8206976244b5ad82f01ffd41abb3',
-  //       target: 'de635b9043bf48a48df6c4fcc84f3014',
-  //     },
-  //     {
-  //       shape: 'yellow-edge',
-  //       labels: null,
-  //       source: 'd214ff3b04f3483fbbd40b6924c95a19',
-  //       target: '0f500b6838394484a24fe7dc1f5c75cf',
-  //     },
-  //     {
-  //       shape: 'yellow-edge',
-  //       labels: null,
-  //       source: '0f500b6838394484a24fe7dc1f5c75cf',
-  //       target: '6f7e8206976244b5ad82f01ffd41abb3',
-  //     },
-  //   ],
-  // }
 }
 </script>
 

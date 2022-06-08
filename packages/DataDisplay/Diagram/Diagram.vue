@@ -163,41 +163,40 @@ export default class Diagram extends Vue {
     // 这个居中操作必须在更新数据后调用，否则不起作用
     this.graph.centerContent();
 
+    // const ids = this.graph.model.getCellById('test');
+    debugger;
+
     // const parent = this.graph.addNode({
-    //   x: 40,
-    //   y: 40,
-    //   width: 360,
-    //   height: 160,
-    //   zIndex: 1,
+    //   width: 150,
+    //   height: 600,
+    //   zIndex: -1,
     //   label: '保山怒江金矿',
+    //   children: ['b83f3407fc2544a797b882f878ff8f6f', 'f88bdc435b984ac6882158fe16642782'],
     //   attrs: {
-    //     label: { refY: 140 },
+    //     label: { refY: this.graph.options.height, refY2: -250, fill: '#fff' },
     //     body: {
-    //       fill: '#fffbe6',
+    //       stroke: 'red',
+    //       fill: 'transparent',
     //     },
     //   },
     // });
-    //
+
     // const target = this.graph.addNode({
-    //   x: 0,
-    //   y: 0,
     //   width: 80,
     //   height: 40,
     //   label: 'Child\n(target)',
-    //   zIndex: 10,
     //   attrs: {
     //     body: {
     //       stroke: 'none',
     //       fill: '#47C769',
-    //     },‘
-
-    //     label: {-【】
+    //     },
+    //     label: {
     //       fill: '#fff',
     //     },
     //   },
     // });
-    //
-    // parent.addChild(target);
+
+    // parent.setChildren([target], { silent: true });
   }
 
   mounted() {
