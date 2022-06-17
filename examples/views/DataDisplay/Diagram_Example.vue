@@ -9,8 +9,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import Diagram from '../../../packages/DataDisplay/Diagram/Diagram.vue';
 
-@Component({ name: 'DiagramExample' })
+@Component({
+  name: 'DiagramExample',
+  components: { Diagram },
+})
 export default class DiagramExample extends Vue {
   // data: any = {
   //   // 节点

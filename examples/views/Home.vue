@@ -23,17 +23,15 @@
 
     <!--    <CarouselTableExample style="margin:auto;"></CarouselTableExample>-->
 
-    <!--    <a-card title="行/列合并">-->
-    <!--      <merger-table-example></merger-table-example>-->
-    <!--    </a-card>-->
+    <a-card title="行/列合并" class="margin-tb-lg" style="margin-top: 24px;">
+      <merger-table-example></merger-table-example>
+    </a-card>
 
-    <!--    <a-card title="进度条">-->
-    <!--      <target-progress :strokeWidth="40"-->
-    <!--                       :success-value="80.5333"-->
-    <!--                       :target-list="targetList"></target-progress>-->
-    <!--    </a-card>-->
+    <a-card title="进度条" style="margin-top: 24px;">
+      <target-progress-example></target-progress-example>
+    </a-card>
 
-    <a-card title="流程图" style="width: 100%">
+    <a-card title="流程图" style="width: 100%;margin-top: 24px;">
       <diagram-example></diagram-example>
     </a-card>
   </div>
@@ -44,11 +42,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import BorderlessCardExample from './Card/BorderlessCard_Example.vue';
 import CarouselTableExample from './DataDisplay/CarouselTable_Example.vue';
 import MergerTableExample from './DataDisplay/MergerTable_Example.vue';
-import TargetProgress from '../../packages/Feedback/TargetProgress.vue';
+import TargetProgress from '../../packages/Feedback/TargetProgress/TargetProgress.vue';
 import DiagramExample from './DataDisplay/Diagram_Example.vue';
+import TargetProgressExample from './Feedback/TargetProgress_Example.vue';
 
 @Component({
   components: {
+    TargetProgressExample,
     DiagramExample,
     TargetProgress,
     MergerTableExample,
@@ -131,22 +131,5 @@ export default class Home extends Vue {
       tabsModal.show();
     }
   }
-
-  targetList = [{
-    title: '目标',
-    color: 'red',
-    value: 60,
-    size: 30,
-  }, {
-    title: '目标1',
-    color: 'green',
-    value: 100,
-    size: 30,
-  }, {
-    title: '目标2',
-    color: 'yellow',
-    value: 20,
-    size: 30,
-  }];
 }
 </script>
