@@ -11,12 +11,13 @@ import DescInfoCard from './DataDisplay/DescInfoBlock';
 import CarouselTable from './DataDisplay/CarouselTable';
 import { customRenderMerger } from './Services';
 import Diagram from './DataDisplay/Diagram';
+import NoticeBar from './DataDisplay/NoticeBar';
 
 // Feedback
 import TargetProgress from './Feedback/TargetProgress';
 
 // 组件列表
-const components = [MultipleChoiceBox, RangePicker, TabsModal, BorderlessCard, DescInfoCard, CarouselTable, TargetProgress, Diagram];
+const components = [MultipleChoiceBox, RangePicker, TabsModal, BorderlessCard, DescInfoCard, CarouselTable, TargetProgress, Diagram, NoticeBar];
 
 // 定义 install 方法，接收 Vue 作为参数。如果使用 use 注册插件，那么所有的组件都会被注册
 const install = (Vue) => {
@@ -44,6 +45,7 @@ const UserDefinedComponents = {
   CustomRenderMerger: customRenderMerger,
   TargetProgress,
   Diagram,
+  NoticeBar,
 };
 
 export default UserDefinedComponents;

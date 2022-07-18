@@ -34,6 +34,10 @@
     <a-card title="流程图" style="width: 100%;margin-top: 24px;">
       <diagram-example></diagram-example>
     </a-card>
+
+    <a-card title="公告栏文字停顿滚动" style="width: 100%;margin-top: 24px;">
+      <notice-bar-example></notice-bar-example>
+    </a-card>
   </div>
 </template>
 
@@ -45,9 +49,13 @@ import MergerTableExample from './DataDisplay/MergerTable_Example.vue';
 import TargetProgress from '../../packages/Feedback/TargetProgress/TargetProgress.vue';
 import DiagramExample from './DataDisplay/Diagram_Example.vue';
 import TargetProgressExample from './Feedback/TargetProgress_Example.vue';
+import NoticeBar from '../../packages/DataDisplay/NoticeBar/NoticeBar.vue';
+import NoticeBarExample from './DataDisplay/NoticeBar_Example.vue';
 
 @Component({
   components: {
+    NoticeBarExample,
+    NoticeBar,
     TargetProgressExample,
     DiagramExample,
     TargetProgress,
