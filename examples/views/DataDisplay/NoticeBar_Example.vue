@@ -4,11 +4,14 @@
 * @创建时间: 2022-07-18 15:59:34
 */
 <template>
-  <notice-bar :data-source="data" :timeout="2000">
-    <div slot-scope="{item}" :key="item.id">
-      <a-icon type="notification" theme="twoTone"/>
-      <a>{{ item.text }}</a>
+  <notice-bar :data-source="data" style="border: 1px solid red;">
+    <div slot-scope="{items}" class="flex">
+      <div :key="item.id" v-for="item in items" class="margin-right-xs">
+        <a-icon type="notification" theme="twoTone" />
+        <a>{{ item.text }}</a>
+      </div>
     </div>
+
   </notice-bar>
 </template>
 
@@ -21,7 +24,11 @@ import NoticeBar from '../../../packages/DataDisplay/NoticeBar/NoticeBar.vue';
   components: { NoticeBar },
 })
 export default class NoticeBarExample extends Vue {
-  data = ['通告一', '通告二', '通告三', '通告四'];
+  data = [
+    { id: 1, text: '通告1111111111111111111111111111111' },
+    { id: 2, text: '通告22222222222222222222222222222' },
+    { id: 3, text: '通告333333333333333333333333333333' },
+  ];
 }
 </script>
 

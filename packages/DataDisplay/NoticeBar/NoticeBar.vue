@@ -4,12 +4,20 @@
 * @创建时间: 2022-07-18 15:49:27
 */
 <template>
-  <div class="noticeBar">
-    <transition name="slide" v-if="dataSource.length">
-      <slot :item="item">
-        <div :key="item.id">{{ item.text }}</div>
+  <div>
+    <vue-seamless-scroll v-if="dataSource.length"
+                         :data="dataSource"
+                         :class-option="getOptions"
+                         class="seamless-warp">
+      <slot :items="dataSource">
+        <div class="flex content">
+          <div v-for="(item,index) in dataSource" :key="item.id||index"
+               class="margin-right-sm">
+            {{ item.text }}
+          </div>
+        </div>
       </slot>
-    </transition>
+    </vue-seamless-scroll>
   </div>
 </template>
 
@@ -17,87 +25,36 @@
 import {
   Component, Prop, Vue, Watch,
 } from 'vue-property-decorator';
+import vueSeamlessScroll from 'vue-seamless-scroll';
 
-@Component({ name: 'NoticeBar' })
+@Component({ name: 'NoticeBar', components: { vueSeamlessScroll } })
 export default class NoticeBar extends Vue {
-  @Prop({ type: Array, default: () => ([]) }) dataSource: {
-    id: string, text: string, extraData: Record<any,
-      any>
-  }[] | undefined
+  @Prop({
+    type: Array,
+    default: () => ([]),
+  }) dataSource: { id: string, text: string, extraData: Record<any, any> }[] | undefined
 
-  // 间隔时间
-  @Prop({ type: Number, default: 1000 }) timeout: number | undefined
+  // 开启无缝滚动的数据量
+  @Prop({ type: Number, default: 3 }) limitMoveNum: number | undefined
 
-  // 当前显示的通告的索引index
-  activeIndex = 0;
+  // 方向（方向 0 往下 1 往上 2向左 3向右）
+  @Prop({ type: String, default: 'left' }) direction: string | undefined
 
-  timer = null;
+  // @Prop({ type: Number, default: 500 }) width: number | undefined
 
-  get item() {
+  get getOptions() {
     return {
-      id: this.activeIndex,
-      text: this.dataSource[this.activeIndex],
+      direction: { left: 2, right: 3 }[this.direction] || 2,
+      limitMoveNum: this.limitMoveNum > this.dataSource.length ? this.dataSource.length : this.limitMoveNum,
     };
-  }
-
-  // 开始翻滚
-  startMove() {
-    this.timer = setTimeout(() => {
-      if (this.activeIndex === this.dataSource.length - 1) {
-        this.activeIndex = 0;
-      } else {
-        this.activeIndex += 1;
-      }
-      this.startMove();
-    }, this.timeout); // 滚动不需要停顿则将2000改成动画持续时间
-  }
-
-  // 结束
-  stopMove() {
-    clearTimeout(this.timer);
-    this.timer = null;
-    this.activeIndex = 0;
-  }
-
-  destroyed() {
-    this.stopMove();
-  }
-
-  // 数据源变化
-  @Watch('dataSource', { immediate: true, deep: true })
-  handleDataSourceChange(newVal, oldVal) {
-    this.stopMove();
-    this.startMove();
-  }
-
-  // 间隔时间变化
-  @Watch('timeout')
-  handleTimeoutChange(newVal, oldVal) {
-    if (newVal !== oldVal && newVal) {
-      this.stopMove();
-      this.startMove();
-    }
   }
 }
 </script>
 
 <style scoped lang="less">
-.noticeBar {
+.seamless-warp {
   height: 30px;
   line-height: 30px;
-  position: relative;
   overflow: hidden;
-}
-
-.slide-enter-active, .slide-leave-active {
-  transition: all 0.5s linear;
-}
-
-.slide-leave-to {
-  transform: translateY(-50px);
-}
-
-.slide-enter {
-  transform: translateY(50px);
 }
 </style>
