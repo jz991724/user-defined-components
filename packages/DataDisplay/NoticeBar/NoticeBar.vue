@@ -9,14 +9,14 @@
                          :data="dataSource"
                          :class-option="getOptions"
                          class="seamless-warp">
-      <slot :items="dataSource">
-        <div class="flex content">
+      <div class="flex content">
+        <slot :items="dataSource">
           <div v-for="(item,index) in dataSource" :key="item.id||index"
                class="margin-right-sm">
             {{ item.text }}
           </div>
-        </div>
-      </slot>
+        </slot>
+      </div>
     </vue-seamless-scroll>
   </div>
 </template>
@@ -26,6 +26,7 @@ import {
   Component, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import vueSeamlessScroll from 'vue-seamless-scroll';
+import $ from 'jquery';
 
 @Component({ name: 'NoticeBar', components: { vueSeamlessScroll } })
 export default class NoticeBar extends Vue {
@@ -40,13 +41,20 @@ export default class NoticeBar extends Vue {
   // 方向（方向 0 往下 1 往上 2向左 3向右）
   @Prop({ type: String, default: 'left' }) direction: string | undefined
 
-  // @Prop({ type: Number, default: 500 }) width: number | undefined
-
   get getOptions() {
     return {
       direction: { left: 2, right: 3 }[this.direction] || 2,
       limitMoveNum: this.limitMoveNum > this.dataSource.length ? this.dataSource.length : this.limitMoveNum,
     };
+  }
+
+  init() {
+    const width = $(this.$el)?.find('.content')?.first()?.width();
+    $(this.$el).width(width);
+  }
+
+  mounted() {
+    this.init();
   }
 }
 </script>
