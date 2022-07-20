@@ -4,14 +4,13 @@
 * @创建时间: 2022-07-18 15:59:34
 */
 <template>
-  <notice-bar :data-source="data" style="border: 1px solid red;">
+  <notice-bar :data-source="data" style="border: 1px solid red;width: 900px;">
     <div slot-scope="{items}" class="flex">
       <div :key="item.id" v-for="item in items" class="margin-right-xs">
         <a-icon type="notification" theme="twoTone" />
         <a>{{ item.text }}</a>
       </div>
     </div>
-
   </notice-bar>
 </template>
 
