@@ -9,10 +9,11 @@
                          :data="dataSource"
                          :class-option="getOptions"
                          class="seamless-warp">
-      <div class="flex content">
+      <div class="content">
         <slot :items="dataSource">
-          <div v-for="(item,index) in dataSource" :key="item.id||index"
-               class="margin-right-sm">
+          <div v-for="(item,index) in dataSource"
+               :key="item.id||index"
+               style="margin-right: 20px;">
             {{ item.text }}
           </div>
         </slot>
@@ -64,5 +65,13 @@ export default class NoticeBar extends Vue {
   height: 30px;
   line-height: 30px;
   overflow: hidden;
+
+  .content {
+    display: flex;
+  }
+
+  > div {
+    display: flex;
+  }
 }
 </style>
