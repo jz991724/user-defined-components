@@ -287,9 +287,33 @@ export default class DiagramExample extends Vue {
     edges: [
       {
         shape: 'yellow-edge',
-        labels: null,
         source: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
         target: '7067103e01794a419334690f10c6293c',
+        labels: [// label的数据格式
+          {
+            attrs: {
+              label: { text: '测试', data: JSON.stringify({ text: '你妹' }) },
+              body: {
+                fill: 'red',
+              },
+            },
+          },
+          {
+            attrs: {
+              label: { text: '测试2', data: JSON.stringify({ text: '你妹2' }) },
+              body: {
+                fill:
+                  'yellow',
+              },
+            },
+            position: {
+              distance: 0.6,
+              options: {
+                absoluteDistance: true,
+              },
+            },
+          },
+        ],
       },
       {
         shape: 'yellow-edge',

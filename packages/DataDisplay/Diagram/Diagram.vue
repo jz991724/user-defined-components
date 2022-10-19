@@ -14,6 +14,7 @@ import {
 import { Graph } from '@antv/x6';
 import '@antv/x6-vue-shape';
 import { DagreLayout } from '@antv/layout';
+import $ from 'jquery';
 import CustomNode from './CustomNode.vue';
 
 export interface DiagramData {
@@ -64,7 +65,7 @@ export default class Diagram extends Vue {
         defaultLabel: {
           markup: [
             {
-              tagName: 'rect',
+              tagName: 'circle',
               selector: 'body',
             },
             {
@@ -74,27 +75,27 @@ export default class Diagram extends Vue {
           ],
           attrs: {
             label: {
+              event: 'edge:click', // 点击边的时候触发
+              xlinkType: 'a',
               fill: '#fff',
               fontSize: 12,
               textAnchor: 'middle',
               textVerticalAnchor: 'middle',
-              pointerEvents: 'none',
+              refX: '50%',
+              refX2: 30,
             },
             body: {
               ref: 'label',
               fill: this.backgroundColor,
-              stroke: '#BFCB5B',
-              strokeWidth: 2,
-              rx: 4,
-              ry: 4,
-              refWidth: '140%',
-              refHeight: '140%',
-              refX: '-20%',
-              refY: '-20%',
+              // stroke: '#BFCB5B',
+              // strokeWidth: 1,
+              refR: '50%', // 半径
+              refCx: 0,
+              refCy: 0,
             },
           },
           position: {
-            distance: 100, // 绝对定位
+            distance: 0.5, // 中间位置
             options: {
               absoluteDistance: true,
             },
@@ -141,6 +142,16 @@ export default class Diagram extends Vue {
                                  }) => {
       e.stopPropagation();
       console.log('nodeData:', node.getData());
+    });
+
+    // 点击edge
+    this.graph.on('edge:click', ({
+                                   e, x, y, edge, view,
+                                 }) => {
+      e.stopPropagation();
+      const labelData = $(e.currentTarget).attr('data');
+      debugger;
+      console.log('edge:click事件:', JSON.parse(labelData));
     });
 
     this.updateData(data);
