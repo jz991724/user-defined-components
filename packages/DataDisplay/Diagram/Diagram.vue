@@ -79,10 +79,10 @@ export default class Diagram extends Vue {
               xlinkType: 'a',
               fill: '#fff',
               fontSize: 12,
-              textAnchor: 'middle',
+              textAnchor: 'Start',
               textVerticalAnchor: 'middle',
-              refX: '50%',
-              refX2: 30,
+              refX: '100%',
+              refX2: 20,
             },
             body: {
               ref: 'label',
