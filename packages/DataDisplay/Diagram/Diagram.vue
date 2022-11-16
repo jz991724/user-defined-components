@@ -4,118 +4,152 @@
 * @创建时间: 2022-06-01 15:51:02
 */
 <template>
-  <div ref="mountNode" style="width: 100%;height: 100%;"></div>
+  <div ref="mountNode" style="width: 100%;height: 100%;" v-bind="$attrs"></div>
 </template>
 
 <script lang="ts">
 import {
-  Component, Prop, Vue, Watch,
+  Component, Emit, Prop, Vue, Watch,
 } from 'vue-property-decorator';
 import { Graph } from '@antv/x6';
 import '@antv/x6-vue-shape';
 import { DagreLayout } from '@antv/layout';
-import $ from 'jquery';
 import CustomNode from './CustomNode.vue';
 
 export interface DiagramData {
-  nodes: any[],
-  edges: any[]
+  nodes: any[];
+  edges: any[];
 }
 
 @Component({
   name: 'Diagram',
 })
 export default class Diagram extends Vue {
-  @Prop({ type: Object, default: () => ({}) }) dataSource: DiagramData | undefined;
+  @Prop({
+    type: Object,
+    default: () => ({}),
+  }) dataSource: DiagramData | undefined;
 
   // 图的布局类型
-  @Prop({ type: String, default: 'dagre' }) type: string | undefined
+  @Prop({
+    type: String,
+    default: 'dagre',
+  }) type: string | undefined;
 
-  @Prop({ type: String, default: '#029C9C' }) backgroundColor: string | undefined
+  @Prop({
+    type: String,
+    default: 'transparent',
+  }) backgroundColor: string | undefined;
 
-  graph;
+  @Prop({
+    type: Number || String,
+    default: undefined,
+  }) width: number | string | undefined;
+
+  @Prop({
+    type: Number || String,
+    default: undefined,
+  }) height: number | string | undefined;
+
+  graph: any;
+
+  get getStyle() {
+    return {
+      width: this.width,
+      height: this.height,
+    };
+  }
 
   // 注册所有的自定义node
   registerNodes() {
-    Graph.registerNode('custom-node', {
-      inherit: 'vue-shape',
-      width: 50,
-      height: 35,
-      component: {
-        template: '<custom-node/>',
-        components: { CustomNode },
-      },
-    });
+    try {
+      Graph.registerNode('custom-node', {
+        inherit: 'vue-shape',
+        width: 50,
+        height: 50,
+        component: {
+          template: '<custom-node/>',
+          components: { CustomNode },
+        },
+      });
+    } catch (e) {
+      // console.error('AntV x6自定义node报错：', e);
+    }
   }
 
   // 注册所有的自定义edge
   registerEdges() {
-    Graph.registerEdge(
-      'yellow-edge', // 边名称
-      {
-        // 基类
-        inherit: 'edge',
-        // 属性样式
-        attrs: {
-          line: {
-            stroke: '#BFCB5B',
-          },
-        },
-        // 默认标签
-        defaultLabel: {
-          markup: [
-            {
-              tagName: 'circle',
-              selector: 'body',
-            },
-            {
-              tagName: 'text',
-              selector: 'label',
-            },
-          ],
+    try {
+      Graph.registerEdge(
+        'yellow-edge', // 边名称
+        {
+          // 基类
+          inherit: 'edge',
+          // 属性样式
           attrs: {
-            label: {
-              event: 'edge:click', // 点击边的时候触发
-              xlinkType: 'a',
-              fill: '#fff',
-              fontSize: 12,
-              textAnchor: 'Start',
-              textVerticalAnchor: 'middle',
-              refX: '100%',
-              refX2: 20,
-            },
-            body: {
-              ref: 'label',
-              fill: this.backgroundColor,
-              // stroke: '#BFCB5B',
-              // strokeWidth: 1,
-              refR: '50%', // 半径
-              refCx: 0,
-              refCy: 0,
+            line: {
+              stroke: '#BFCB5B',
             },
           },
-          position: {
-            distance: 0.5, // 中间位置
-            options: {
-              absoluteDistance: true,
+          // 默认标签
+          // 默认标签
+          defaultLabel: {
+            markup: [
+              {
+                tagName: 'circle',
+                selector: 'body',
+              },
+              {
+                tagName: 'text',
+                selector: 'label',
+              },
+            ],
+            attrs: {
+              label: {
+                event: 'edge:click', // 点击边的时候触发
+                xlinkType: 'a',
+                fill: '#fff',
+                fontSize: 12,
+                textAnchor: 'Start',
+                textVerticalAnchor: 'middle',
+                refX: '100%',
+                refX2: 20,
+              },
+              body: {
+                ref: 'label',
+                fill: this.backgroundColor,
+                // stroke: '#BFCB5B',
+                // strokeWidth: 1,
+                refR: '50%', // 半径
+                refCx: 0,
+                refCy: 0,
+              },
+            },
+            position: {
+              distance: 0.5, // 中间位置
+              options: {
+                absoluteDistance: true,
+              },
             },
           },
         },
-      },
-    );
+      );
+    } catch (e) {
+      // console.error('AntV x6自定义edge报错：', e);
+    }
   }
 
   // 初始化
   initGraph(data = this.dataSource) {
+    debugger;
     const { mountNode }: any = this.$refs;
     const width = mountNode.scrollWidth;
-    const height = mountNode.scrollHeight || 500;
-
-    this.graph = new Graph({
+    const height = mountNode.scrollHeight;
+    const options: any = {
       container: mountNode,
-      width,
-      height,
-      autoResize: true, // 是否监听容器大小改变，并自动更新画布大小。
+      width: this.width || width,
+      height: this.height || height,
+      autoResize: false, // 是否监听容器大小改变，并自动更新画布大小。
       panning: false, // 画布是否可以拖动
       background: {
         color: this.backgroundColor, // 设置画布背景颜色
@@ -134,27 +168,32 @@ export default class Diagram extends Vue {
       //     return null;
       //   },
       // },
-    });
+    };
+    this.graph = new Graph(options);
 
     // 初始化node的事件
-    this.graph.on('node:click', ({
-                                   e, x, y, node, view,
-                                 }) => {
+    this.graph.on('node:click', (params) => {
+      const {
+        e,
+        x,
+        y,
+        node,
+        view,
+      } = params;
       e.stopPropagation();
-      console.log('nodeData:', node.getData());
+      this.emitNodeClick(params);
     });
 
-    // 点击edge
-    this.graph.on('edge:click', ({
-                                   e, x, y, edge, view,
-                                 }) => {
+    // 初始化edges的事件
+    this.graph.on('edge:click', (params) => {
+      const { e } = params;
       e.stopPropagation();
-      const labelData = $(e.currentTarget).attr('data');
-      debugger;
-      console.log('edge:click事件:', JSON.parse(labelData));
+      this.emitEdgeClick(params);
     });
 
-    this.updateData(data);
+    if (data) {
+      this.updateData(data);
+    }
   }
 
   // 添加/更新数据
@@ -162,9 +201,9 @@ export default class Diagram extends Vue {
     const dagreLayout = new DagreLayout({
       type: 'dagre', // 流程图
       rankdir: 'BT',
-      align: 'UR',
-      ranksep: 30,
-      nodesep: 50,
+      align: undefined, // undefined：默认，中间对齐。'UR'：对齐到右上角；'UL'：对齐到左上角；'DL'：对齐到左下角；'DR'：对齐到右下角；
+      ranksep: 30, // 在 rankdir 为 TB 或 BT 时是竖直方向相邻层间距
+      nodesep: 0, // 在 rankdir 为 TB 或 BT 时是节点的水平间距
       controlPoints: false,
     });
 
@@ -175,7 +214,6 @@ export default class Diagram extends Vue {
     this.graph.centerContent();
 
     // const ids = this.graph.model.getCellById('test');
-    debugger;
 
     // const parent = this.graph.addNode({
     //   width: 150,
@@ -213,7 +251,9 @@ export default class Diagram extends Vue {
   mounted() {
     this.registerNodes();
     this.registerEdges();
-    this.initGraph();
+    this.$nextTick(() => {
+      this.initGraph();
+    });
   }
 
   // 监听数据源
@@ -223,9 +263,28 @@ export default class Diagram extends Vue {
       this.updateData(newVal);
     }
   }
+
+  // 节点的点击事件
+  @Emit('nodeClick')
+  emitNodeClick(e) {
+    return e;
+  }
+
+  // 边的点击事件
+  @Emit('edgeClick')
+  emitEdgeClick(e) {
+    return e;
+  }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less">
+.v-line {
+  cursor: pointer;
+  fill-opacity: 0.7;
 
+  &:hover {
+    fill-opacity: 1;
+  }
+}
 </style>
