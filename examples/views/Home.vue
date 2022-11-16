@@ -21,7 +21,9 @@
     <!--      <tabs-modal ref="tabsModal"></tabs-modal>-->
     <!--    </borderless-card>-->
 
-    <!--    <CarouselTableExample style="margin:auto;"></CarouselTableExample>-->
+    <a-card title="滚动table" class="margin-tb-lg" style="margin-top: 24px;">
+      <carousel-table-example></carousel-table-example>
+    </a-card>
 
     <a-card title="行/列合并" class="margin-tb-lg" style="margin-top: 24px;">
       <merger-table-example></merger-table-example>

@@ -199,6 +199,17 @@ export default class DiagramExample extends Vue {
   data = {
     nodes: [
       {
+        id: 'edb94526d5d34c2dacde56c692ac5047',
+        shape: 'custom-node',
+        data: {
+          id: 'edb94526d5d34c2dacde56c692ac5047',
+          extraData: {
+            mc: 'aaaa',
+            fwzb: '1,4,1,3020203.90,34590379.50,2,3020048.40,34592233.00,3,3019150.20,34592304.60,4,3018953.60,34590359.60,2800,1860,,1,',
+          },
+        },
+      },
+      {
         id: 'edb94526d5d34c2dacde56c692ac5048',
         shape: 'custom-node',
         data: {
@@ -285,6 +296,36 @@ export default class DiagramExample extends Vue {
       },
     ],
     edges: [
+      {
+        shape: 'yellow-edge',
+        source: '4f46d95ac7c44b9a9668ffb6e5e8d30f',
+        target: 'edb94526d5d34c2dacde56c692ac5047',
+        labels: [// label的数据格式
+          {
+            attrs: {
+              label: { text: '测试', data: JSON.stringify({ text: '你妹' }) },
+              body: {
+                fill: 'red',
+              },
+            },
+          },
+          {
+            attrs: {
+              label: { text: '测试2', data: JSON.stringify({ text: '你妹2' }) },
+              body: {
+                fill:
+                  'yellow',
+              },
+            },
+            position: {
+              distance: 0.6,
+              options: {
+                absoluteDistance: true,
+              },
+            },
+          },
+        ],
+      },
       {
         shape: 'yellow-edge',
         source: '4f46d95ac7c44b9a9668ffb6e5e8d30f',

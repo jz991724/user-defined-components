@@ -15,7 +15,8 @@
              :style="{marginTop:index===0?0:'5px',color:'#fff',borderColor:'#fff'}">{{ tag }}
       </a-tag>
     </div>
-    <a-button :type="nodeData.state?nodeData.state:'primary'"
+    <a-button v-if="nodeData.name||nodeData.state"
+              :type="nodeData.state?nodeData.state:'primary'"
               shape="circle"
               style="font-size:10px;border-color: #fff;">
       {{ nodeData.name }}
