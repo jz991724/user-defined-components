@@ -183,7 +183,11 @@ export default class Diagram extends Vue {
       e.stopPropagation();
       debugger;
       console.log('node:click事件：', params);
-      const { state, name } = params;
+      const {
+        state,
+        name,
+      } = params?.cell?.data || {};
+      debugger;
       // 如果不显示节点就不要点击事件
       if (name || state) {
         this.emitNodeClick(params);
