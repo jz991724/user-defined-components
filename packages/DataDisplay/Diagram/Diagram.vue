@@ -210,6 +210,8 @@ export default class Diagram extends Vue {
 
   // 添加/更新数据
   updateData(data = this.dataSource) {
+    console.log('diagram数据：', data);
+
     const dagreLayout = new DagreLayout({
       type: 'dagre', // 流程图
       rankdir: 'BT',

@@ -7,7 +7,7 @@
   <diagram :dataSource="data"
            style="margin: auto;background: #8799a3;"
            :width="390"
-           :height="data.nodes.length*120"></diagram>
+           :height="data.nodes.length*100"></diagram>
 </template>
 
 <script lang="ts">
