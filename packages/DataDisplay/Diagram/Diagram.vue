@@ -181,13 +181,21 @@ export default class Diagram extends Vue {
         view,
       } = params;
       e.stopPropagation();
-      this.emitNodeClick(params);
+      debugger;
+      console.log('node:click事件：', params);
+      const { state, name } = params;
+      // 如果不显示节点就不要点击事件
+      if (name || state) {
+        this.emitNodeClick(params);
+      }
     });
 
     // 初始化edges的事件
     this.graph.on('edge:click', (params) => {
       const { e } = params;
       e.stopPropagation();
+      debugger;
+      console.log('edge:click事件：', params);
       this.emitEdgeClick(params);
     });
 
