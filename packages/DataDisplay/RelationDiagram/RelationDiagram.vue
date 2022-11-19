@@ -53,12 +53,7 @@ export default class RelationDiagram extends Vue {
 
   graph: any;
 
-  get getStyle() {
-    return {
-      width: this.width,
-      height: this.height,
-    };
-  }
+  activeNode;
 
   // 注册所有的自定义node
   registerNodes() {
@@ -107,12 +102,19 @@ export default class RelationDiagram extends Vue {
         view,
       } = params;
       e.stopPropagation();
+
       // 节点数据
       const nodeData = params?.cell?.data || {};
       // 点击的是多选框
       if (e.target.classList.contains('ant-checkbox-input')) {
         this.emitNodeChecked(!e.target.checked, nodeData);
       } else { // 点击的是节点
+        if (this.activeNode) {
+          this.activeNode.data.active = false;
+        }
+
+        node.data.active = true;
+        this.activeNode = node;
         this.emitNodeClick(nodeData);
       }
     });

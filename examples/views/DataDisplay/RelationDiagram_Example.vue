@@ -29,7 +29,8 @@ export default class RelationDiagramExample extends Vue {
         data: {
           id: '44bc0f6f121211ed96db37c0a86c327b',
           name: '在办延续',
-          // color: '#f06450',
+          color: '#f06450',
+          active: false,
           extraData: {
             mc: '云南省巍山县龙潭铅锌多金属矿普查',
             guid: '14010461',
@@ -49,6 +50,7 @@ export default class RelationDiagramExample extends Vue {
           id: '44bbc14e121211ed96db37c0a86c327b',
           name: '在办变更',
           color: '#00a0a0',
+          active: false,
           extraData: {
             mc: '云南省巍山县龙潭铅锌多金属矿普查',
             guid: '13010005',
@@ -68,6 +70,7 @@ export default class RelationDiagramExample extends Vue {
           id: '4b6e1467121211ed96db37c0a86c327b',
           name: '在办延续',
           color: '#fabe00',
+          active: false,
           extraData: {
             mc: '云南省巍山县龙潭铅锌多金属矿普查',
             guid: '10010383',

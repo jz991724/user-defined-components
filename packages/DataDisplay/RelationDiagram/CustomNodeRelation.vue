@@ -4,12 +4,12 @@
 * @创建时间: 2022-06-02 11:55:43
 */
 <template>
-  <div @mouseenter="(e)=>{isHover=true}"
-       @mouseleave="(e)=>{isHover=false}">
+  <div @mouseenter="onHover(true)"
+       @mouseleave="onHover(false)">
     <a-card v-if="nodeData.color"
             hoverable
             size="small"
-            :style="getHoverStyle"
+            :style="getStyle"
             v-bind="getConfig">
       <div slot="title" class="title">
         {{ nodeData.name }}
@@ -32,7 +32,7 @@
             hoverable
             size="small"
             :body-style="{height:'70px'}"
-            :style="getHoverStyle"
+            :style="getStyle"
             v-bind="getConfig">
       <a-empty description="无对应数据"
                style="margin: auto;"
@@ -52,8 +52,6 @@ export default class CustomNodeRelation extends Vue {
 
   @Inject() getNode: any;
 
-  isHover = false;
-
   node;
 
   graph;
@@ -65,6 +63,12 @@ export default class CustomNodeRelation extends Vue {
       width: '175px',
       padding: '6px 12px',
     },
+  }
+
+  isHover = false;
+
+  onHover(active = false) {
+    this.isHover = active;
   }
 
   /**
@@ -79,11 +83,15 @@ export default class CustomNodeRelation extends Vue {
       parseInt(`0x${hex.slice(5, 7)}`)},${opacity})`;
   }
 
-  get getHoverStyle() {
-    const { color } = this.nodeData;
-    if (this.isHover && color) {
-      return `box-shadow: 0 2px 8px ${this.colorHex2RGBA(color, 0.3)}`;
+  get getStyle() {
+    const { color, active } = this.nodeData;
+    if (this.isHover && !active && color) {
+      return `box-shadow: 0 2px 8px ${this.colorHex2RGBA(color, 0.4)}`;
     }
+    if (active) {
+      return `box-shadow: 0 0px 8px ${this.colorHex2RGBA(color, 0.8)};border:1px solid ${color}`;
+    }
+
     return 'box-shadow: 0 2px 8px rgb(0 160 160 / 9%)';
   }
 
@@ -94,7 +102,7 @@ export default class CustomNodeRelation extends Vue {
       ...this.defaultOptions,
       ...this.$attrs,
       headStyle: {
-        border: `1px solid ${color}`,
+        border: 0,
         background: this.colorHex2RGBA(color, 0.2),
         color,
       },
