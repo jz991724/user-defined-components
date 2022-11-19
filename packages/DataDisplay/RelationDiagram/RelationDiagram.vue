@@ -108,8 +108,6 @@ export default class RelationDiagram extends Vue {
         view,
       } = params;
       e.stopPropagation();
-      debugger;
-      console.log('node:click事件：', params);
       // 节点数据
       const nodeData = params?.cell?.data || {};
       // 点击的是多选框
@@ -124,8 +122,6 @@ export default class RelationDiagram extends Vue {
     this.graph.on('edge:click', (params) => {
       const { e } = params;
       e.stopPropagation();
-      debugger;
-      console.log('edge:click事件：', params);
       this.emitEdgeClick(params);
     });
 
