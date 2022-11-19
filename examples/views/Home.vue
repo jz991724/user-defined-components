@@ -37,6 +37,10 @@
       <diagram-example></diagram-example>
     </a-card>
 
+    <a-card title="关系型流程图" style="width: 100%;margin-top: 24px;">
+      <relation-diagram-example></relation-diagram-example>
+    </a-card>
+
     <a-card title="公告栏文字停顿滚动" style="width: 100%;margin-top: 24px;">
       <notice-bar-example></notice-bar-example>
     </a-card>
@@ -53,9 +57,11 @@ import DiagramExample from './DataDisplay/Diagram_Example.vue';
 import TargetProgressExample from './Feedback/TargetProgress_Example.vue';
 import NoticeBar from '../../packages/DataDisplay/NoticeBar/NoticeBar.vue';
 import NoticeBarExample from './DataDisplay/NoticeBar_Example.vue';
+import RelationDiagramExample from './DataDisplay/RelationDiagram_Example.vue';
 
 @Component({
   components: {
+    RelationDiagramExample,
     NoticeBarExample,
     NoticeBar,
     TargetProgressExample,
