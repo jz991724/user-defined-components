@@ -34,8 +34,7 @@
             :body-style="{height:'70px'}"
             :style="getHoverStyle"
             v-bind="getConfig">
-      <a-empty :image="simpleImage"
-               description="无对应数据"
+      <a-empty description="无对应数据"
                style="margin: auto;"
                :imageStyle="{width:'32px',height: 'auto',margin:'auto'}"></a-empty>
     </a-card>
@@ -46,7 +45,6 @@
 import {
   Component, Inject, Prop, Vue,
 } from 'vue-property-decorator';
-import { Empty } from 'ant-design-vue';
 
 @Component({ name: 'CustomNodeRelation' })
 export default class CustomNodeRelation extends Vue {
@@ -68,8 +66,6 @@ export default class CustomNodeRelation extends Vue {
       padding: '6px 12px',
     },
   }
-
-  simpleImage;
 
   /**
    * @desc hex->rgba
@@ -103,10 +99,6 @@ export default class CustomNodeRelation extends Vue {
         color,
       },
     };
-  }
-
-  beforeCreate() {
-    this.simpleImage = Empty.RESENTED_IMAGE_DEFAULT;
   }
 
   mounted() {
