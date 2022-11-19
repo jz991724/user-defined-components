@@ -4,20 +4,40 @@
 * @创建时间: 2022-06-02 11:55:43
 */
 <template>
-  <div>
-    <a-card v-if="nodeData.name||nodeData.state"
+  <div @mouseenter="(e)=>{isHover=true}"
+       @mouseleave="(e)=>{isHover=false}">
+    <a-card v-if="nodeData.color"
             hoverable
             size="small"
-            style="box-shadow: 0 2px 8px rgb(0 160 160 / 9%);"
+            :style="getHoverStyle"
             v-bind="getConfig">
-      <div slot="title" class="title">{{ nodeData.name }}</div>
+      <div slot="title" class="title">
+        {{ nodeData.name }}
+        <template v-if="nodeData.extraData&&nodeData.extraData.qfsj">
+          ({{
+            nodeData.extraData.qfsj
+          }})
+        </template>
+      </div>
       <template slot="extra">
-        <a-checkbox @change="onCheckboxChange"></a-checkbox>
+        <a-checkbox style="margin-left: 8px;"></a-checkbox>
       </template>
 
       <div class="content">
-        {{ nodeData.content }}
+        {{ nodeData.extraData.xkzh || '' }}
       </div>
+    </a-card>
+
+    <a-card v-else
+            hoverable
+            size="small"
+            :body-style="{height:'70px'}"
+            :style="getHoverStyle"
+            v-bind="getConfig">
+      <a-empty :image="simpleImage"
+               description="无对应数据"
+               style="margin: auto;"
+               :imageStyle="{width:'32px',height: 'auto',margin:'auto'}"></a-empty>
     </a-card>
   </div>
 </template>
@@ -26,12 +46,15 @@
 import {
   Component, Inject, Prop, Vue,
 } from 'vue-property-decorator';
+import { Empty } from 'ant-design-vue';
 
 @Component({ name: 'CustomNodeRelation' })
 export default class CustomNodeRelation extends Vue {
   @Inject() getGraph: any;
 
   @Inject() getNode: any;
+
+  isHover = false;
 
   node;
 
@@ -42,9 +65,11 @@ export default class CustomNodeRelation extends Vue {
   defaultOptions = {
     bodyStyle: {
       width: '175px',
-      padding: '4px 12px',
+      padding: '6px 12px',
     },
   }
+
+  simpleImage;
 
   /**
    * @desc hex->rgba
@@ -56,6 +81,14 @@ export default class CustomNodeRelation extends Vue {
   colorHex2RGBA(hex, opacity) {
     return `rgba(${parseInt(`0x${hex.slice(1, 3)}`)},${parseInt(`0x${hex.slice(3, 5)}`)},${
       parseInt(`0x${hex.slice(5, 7)}`)},${opacity})`;
+  }
+
+  get getHoverStyle() {
+    const { color } = this.nodeData;
+    if (this.isHover && color) {
+      return `box-shadow: 0 2px 8px ${this.colorHex2RGBA(color, 0.3)}`;
+    }
+    return 'box-shadow: 0 2px 8px rgb(0 160 160 / 9%)';
   }
 
   get getConfig() {
@@ -72,9 +105,8 @@ export default class CustomNodeRelation extends Vue {
     };
   }
 
-  // 多选框选择change
-  onCheckboxChange(e) {
-    debugger;
+  beforeCreate() {
+    this.simpleImage = Empty.RESENTED_IMAGE_DEFAULT;
   }
 
   mounted() {
@@ -82,11 +114,6 @@ export default class CustomNodeRelation extends Vue {
     this.graph = this.getGraph();
 
     this.nodeData = this.node.getData();
-
-    // 监听数据改变事件
-    // this.node.on('change:data', (params) => {
-    //   debugger;
-    // });
   }
 }
 </script>
@@ -94,16 +121,18 @@ export default class CustomNodeRelation extends Vue {
 <style scoped lang="less">
 @borderColor: rgba(0, 160, 160, 1);
 
-/deep/ .ant-card {
-  &:hover {
-    box-shadow: 0px 0px 10px rgba(0, 160, 160, .4) !important;
-  }
-}
+///deep/ .ant-card {
+//  &:hover {
+//    box-shadow: 0px 0px 10px rgba(0, 160, 160, .4) !important;
+//  }
+//}
 
 .title {
   font-weight: 500;
   font-style: normal;
   font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .content {
@@ -134,6 +163,12 @@ export default class CustomNodeRelation extends Vue {
     &::after {
       border-color: @borderColor;
     }
+  }
+}
+
+/deep/ .ant-empty-image {
+  svg {
+    width: 32px;
   }
 }
 </style>

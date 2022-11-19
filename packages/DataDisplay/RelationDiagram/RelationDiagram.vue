@@ -66,7 +66,7 @@ export default class RelationDiagram extends Vue {
       Graph.registerNode('custom-node-relation', {
         inherit: 'vue-shape',
         width: 175,
-        height: 65,
+        height: 70,
         component: {
           template: '<custom-node-relation/>',
           components: { CustomNodeRelation },
@@ -81,7 +81,6 @@ export default class RelationDiagram extends Vue {
 
   // 初始化
   initGraph(data = this.dataSource) {
-    debugger;
     const { mountNode }: any = this.$refs;
     const width = mountNode.scrollWidth;
     const height = mountNode.scrollHeight;
@@ -138,7 +137,7 @@ export default class RelationDiagram extends Vue {
       type: 'dagre', // 流程图
       rankdir: 'BT',
       align: undefined, // undefined：默认，中间对齐。'UR'：对齐到右上角；'UL'：对齐到左上角；'DL'：对齐到左下角；'DR'：对齐到右下角；
-      ranksep: 50, // 在 rankdir 为 TB 或 BT 时是竖直方向相邻层间距
+      ranksep: 35, // 在 rankdir 为 TB 或 BT 时是竖直方向相邻层间距
       nodesep: 0, // 在 rankdir 为 TB 或 BT 时是节点的水平间距
       controlPoints: false,
     });
