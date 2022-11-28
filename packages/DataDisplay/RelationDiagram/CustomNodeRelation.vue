@@ -60,7 +60,7 @@ export default class CustomNodeRelation extends Vue {
 
   defaultOptions = {
     bodyStyle: {
-      width: '175px',
+      minWidth: '175px',
       padding: '6px 12px',
     },
   }
